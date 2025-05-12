@@ -1,0 +1,221 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif; /* fuente Roboto */
+  margin: 0;
+  padding: 0;
+  background-color: #000; 
+  color: #fff; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  background-image: url('C:\Users\crist\Desktop\front gym\gym-frontend\public\logo.png'); /* Imagen de fondo */
+  background-size: contain; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Asegura que ocupe toda la pantalla */
+  padding: 1rem;
+  width: 100%; /* Asegura que ocupe todo el ancho */
+}
+
+.login-box {
+  background-color: #1f2937; /* Gris oscuro */
+  padding: 2rem;
+  border-radius: 0.75rem; /* Bordes más redondeados */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+  max-width: 90%; /* Máximo ancho del formulario */
+  width: 400px; /* Ancho base */
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .login-box {
+    width: 90%; /* Ajusta el ancho en pantallas pequeñas */
+    padding: 1.5rem; /* Reduce el padding */
+  }
+}
+
+.login-header {
+  margin-bottom: 1.5rem;
+}
+
+.login-logo {
+  width: 100px; /* Ajusta el tamaño del logo */
+  height: 100px;
+  margin: 0 auto 1rem;
+}
+
+.login-header h2 {
+  font-size: 1.8rem; /* Tamaño más grande para el título */
+  font-weight: bold;
+  color: #fff; /* Texto blanco */
+}
+
+.login-error {
+  color: #ef4444; /* Rojo */
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem; /* Más espacio entre los campos */
+}
+
+.login-input {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem; /* Bordes más redondeados */
+  background-color: #374151; /* Gris más claro */
+  color: #fff;
+  font-size: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.login-input::placeholder {
+  color: #9ca3af; /* Placeholder gris */
+}
+
+.login-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #ef4444; /* Rojo */
+}
+
+.login-button {
+  padding: 0.75rem;
+  background-color: #ef4444; /* Rojo */
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem; /* Bordes más redondeados */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-button:hover {
+  background-color: #dc2626; /* Rojo más oscuro */
+  transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+.login-footer {
+  margin-top: 1.5rem; /* Más espacio encima del pie */
+  font-size: 0.875rem;
+  color: #9ca3af; /* Gris claro */
+}
+
+.login-link {
+  color: #ef4444; /* Rojo */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+.login-footer a {
+  color: #ef4444; /* Rojo */
+  text-decoration: none;
+}
+.login-footer a:hover {
+  text-decoration: underline;
+}   
+.login-footer a:visited {
+  color: #ef4444; /* Rojo */
+}
+.login-footer a:active {
+  color: #ef4444; /* Rojo */
+}
+
+.login-link {
+  color: #ef4444; /* Rojo */
+  text-decoration: none;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Sombra negra suave */
+}
+
+.login-error {
+  color: #ef4444; /* Rojo */
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Sombra negra suave */
+}
+.login-header {
+  margin-bottom: 1.5rem;
+  text-align: center; /* Centra el texto */
+}
+
+
+.login-header h2 {
+  font-size: 1.8rem; /* Tamaño más grande para el título */
+  font-weight: bold;
+  color: #fff; /* Texto blanco */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra negra más pronunciada */
+  text-align: center; /* Centra el texto */
+}
+
+.login-logo {
+  width: 100px; /* Ajusta el tamaño del logo */
+  height: 100px;
+  margin: 0 auto 1rem;
+  overflow: hidden; /* Asegura que la imagen no se desborde */
+}
+.login-logo img {
+  width: 100%; /* Asegura que la imagen ocupe todo el contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+}
+.login-error {
+  color: #ef4444; /* Rojo */
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra negra suave */
+}
+.login-input {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem; /* Bordes más redondeados */
+  background-color: #374151; /* Gris más claro */
+  color: #fff;
+  font-size: 1rem;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+.login-input::placeholder {
+  color: #9ca3af; /* Placeholder gris */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra negra suave */
+}
+.login-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #ef4444; /* Rojo */
+  background-color: #1f2937; /* Cambia el color de fondo al hacer foco */
+}
+.login-button {
+  padding: 0.75rem;
+  background-color: #ef4444; /* Rojo */
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem; /* Bordes más redondeados */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+.login-button:hover {
+  background-color: #dc2626; /* Rojo más oscuro */
+  transform: scale(1.05); /* Efecto de agrandamiento */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra al pasar el mouse */
+}
+.login-button:active {
+  transform: scale(0.95); /* Efecto de contracción al hacer clic */
+}
+a[href="/login"], [href="/planes"],[href="/Perfil"] ,[href="/Clientes"] ,[href="/Admin Planes"],[href="/Asignaciones"]   {
+  display: none; /* Oculta el enlace */
+}

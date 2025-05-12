@@ -1,0 +1,79 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+ 
+  font-family: 'Roboto', sans-serif;
+}
+
+
+.home-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; 
+  background-image: url('/logo home.png'); 
+  background-size: cover; 
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  display: flex;
+  flex-direction: column; /* Alinea el contenido en columna */
+  justify-content: center;
+  align-items: center;
+  padding: 1rem; /* Agrega espacio interno para evitar bordes pegados */
+  overflow: hidden; /* Evita que el contenido desborde */
+}
+
+a[href="/login"] {
+  display: none; /* Oculta el enlace */
+}
+
+.home-content {
+  position: relative;
+  z-index: 1; /* Asegura que el contenido esté encima de la imagen */
+  text-align: center;
+  color: rgb(255, 255, 255);
+  max-width: 90%; /* Limita el ancho del contenido en pantallas pequeñas */
+}
+
+.home-title {
+  font-size: 3rem; /* Tamaño más grande para pantallas grandes */
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); /* Sombra más pronunciada */
+  line-height: 1.2; /* Mejora el espaciado entre líneas */
+}
+
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 2rem; /* Reduce el tamaño en pantallas pequeñas */
+  }
+}
+
+.home-button {
+  background-color: #ef4444; /* Rojo */
+  color: rgb(255, 255, 255);
+  padding: 0.75rem 2rem; /* Botón más ancho */
+  border: none;
+  border-radius: 0.75rem; /* Bordes más redondeados */
+  font-size: 1.5rem; /* Texto más grande */
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra inicial */
+}
+
+.home-button:hover {
+  background-color: #dc2626; /* Rojo más oscuro */
+  transform: scale(1.1); /* Efecto de agrandamiento más notable */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+}
+
+@media (max-width: 768px) {
+  .home-button {
+    font-size: 1.25rem; /* Ajusta el tamaño del texto en pantallas pequeñas */
+    padding: 0.5rem 1.5rem; /* Reduce el tamaño del botón */
+  }
+}
+
+

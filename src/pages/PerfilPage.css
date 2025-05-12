@@ -1,0 +1,171 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Contenedor principal */
+.perfil-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f9fafb;
+  overflow-x: hidden;
+}
+
+/* Panel lateral */
+.perfil-aside {
+  min-width: 260px;
+  background-color: #1f2937;
+  color: white;
+  padding: 2rem 1rem; ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+
+  position: sticky;
+  top: 0;
+}
+
+/* Avatar circular */
+.perfil-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 9999px;
+  background-color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+/* Nombre y rol */
+.perfil-nombre {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+
+.perfil-rol {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Menú lateral */
+.perfil-menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.perfil-menu button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  border-radius: 0.375rem;
+  text-align: left;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.perfil-menu button:hover {
+  background-color: #374151;
+}
+
+.perfil-menu .active {
+  background-color: #ef4444;
+}
+
+/* Cerrar sesión */
+.perfil-logout {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  background-color: #ef4444;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.perfil-logout:hover {
+  background-color: #dc2626;
+}
+
+/* Contenido principal  imagen principal */
+.perfil-main {
+  flex-grow: 1;
+  padding: 2rem;
+  background-image: url('C:\Users\crist\Desktop\front gym\gym-frontend\public\logo home.png'); /* Ruta de la imagen */
+  background-size: cover; /* Ajusta la imagen para cubrir todo el contenedor */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; 
+  overflow-y: auto;
+  min-height: 100vh;
+  width: 100%;
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+    text-align: center;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto para mejor legibilidad */
+
+}
+
+/* Modo responsive */
+@media (max-width: 768px) {
+  .perfil-container {
+    flex-direction: column;
+  }
+
+  .perfil-aside {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .perfil-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .perfil-menu button {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  .perfil-logout {
+    width: auto;
+    margin-top: 1rem;
+  }
+
+  .perfil-main {
+    padding: 1rem;
+  }
+}
+
+
