@@ -1,0 +1,92 @@
+.editar-perfil-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #121212, #1e1e1e);
+  color: white;
+}
+
+.editar-perfil-container-wiget{
+  display: none !important;
+}
+
+.editar-perfil-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  background: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.editar-perfil-container h2 {
+  margin-bottom: 20px;
+}
+
+.editar-perfil-container input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background: #2e2e2e;
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: white;
+}
+
+.editar-perfil-container button {
+  width: 100%;
+  padding: 10px;
+  background: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.editar-perfil-container button:hover {
+  background: #b71c1c;
+}
+
+.avatar-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 2px solid #d32f2f;
+}
+
+.mensaje {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #4caf50;
+}
+
+.btn-uploadcare {
+  background-color: #ef4444;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin: 1rem 0;
+  transition: background-color 0.3s ease;
+}
+
+.btn-uploadcare:hover {
+  background-color: #dc2626;
+}
+
+.avatar-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 2px solid #ef4444;
+}

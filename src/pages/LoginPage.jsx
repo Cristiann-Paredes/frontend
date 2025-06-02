@@ -17,7 +17,8 @@ function LoginPage() {
       localStorage.setItem('token', data.token);
       navigate('/perfil');
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.msg || err.message || 'Error al iniciar sesión');
+
     }
   };
 
@@ -25,7 +26,7 @@ function LoginPage() {
     <div className="login-container">
       <div className="login-box">
         <div className="login-header">
-          <img src="/logo.png" alt="Logo" className="login-logo" />
+          <img src="/fotologo.png" alt="Logo" className="login-logo" />
           <h2>Iniciar sesión</h2>
         </div>
         {error && <p className="login-error">{error}</p>}

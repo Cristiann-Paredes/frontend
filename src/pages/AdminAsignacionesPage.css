@@ -1,0 +1,128 @@
+/* Contenedor general */
+.admin-planes-container {
+ min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, #121212, #1e1e1e);
+  color: white;
+  padding: 7rem;
+  justify-content: space-around;
+  align-items: flex-start;
+  
+}
+
+/* Mensaje */
+.admin-planes-mensaje {
+  background: #1e293b;
+  color: #38bdf8;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid #38bdf8;
+}
+
+/* Formulario */
+.form-asignacion {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-asignacion label {
+  font-weight: bold;
+  color: #f1f5f9;
+  font-size: 0.95rem;
+}
+
+.form-asignacion select,
+.form-asignacion input,
+.form-asignacion textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid #334155;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background: #1e293b;
+  color: #f8fafc;
+  transition: border 0.3s;
+}
+
+.form-asignacion select:focus,
+.form-asignacion input:focus,
+.form-asignacion textarea:focus {
+  border-color: #38bdf8;
+  outline: none;
+}
+
+/* Botón */
+.admin-planes-btn-primario {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.admin-planes-btn-primario:hover {
+  background: #1d4ed8;
+}
+
+/* Tarjetas de asignaciones */
+.admin-planes-ejercicio {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 0.8rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: #e2e8f0;
+}
+
+.admin-planes-ejercicio-header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-weight: 600;
+  color: #38bdf8;
+  margin-bottom: 0.5rem;
+}
+
+.admin-planes-ejercicio b {
+  color: #f8fafc;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .admin-planes-container {
+    padding: 1rem;
+  }
+
+  .form-asignacion input,
+  .form-asignacion select,
+  .form-asignacion textarea {
+    font-size: 0.95rem;
+  }
+
+  .admin-planes-ejercicio-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* Scroll interno para Asignaciones por cliente */
+.asignaciones-por-cliente {
+  max-height: 500px; /* Ajusta este valor si quieres más/menos espacio */
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+/* Opcional: personaliza el scrollbar */
+.asignaciones-por-cliente::-webkit-scrollbar {
+  width: 6px;
+}
+

@@ -11,7 +11,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh; 
-  background-image: url('C:\Users\crist\Desktop\front gym\gym-frontend\public\logo.png'); /* Imagen de fondo */
+  background-image: url('C:\Users\crist\Desktop\front gym\gym-frontend\public\fotologo.png'); /* Imagen de fondo */
   background-size: contain; 
   background-position: center; 
   background-repeat: no-repeat; 
@@ -216,6 +216,4 @@ body {
 .login-button:active {
   transform: scale(0.95); /* Efecto de contracción al hacer clic */
 }
-a[href="/login"], [href="/planes"],[href="/Perfil"] ,[href="/Clientes"] ,[href="/Admin Planes"],[href="/Asignaciones"]   {
-  display: none; /* Oculta el enlace */
-}
+
