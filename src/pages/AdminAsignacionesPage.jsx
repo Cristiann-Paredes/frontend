@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import './AdminAsignacionesPage.css'
-import axios from 'axios'
+import { useEffect, useState } from 'react';
+import './AdminAsignacionesPage.css';
+import axios from 'axios';
 
 function AdminAsignacionesPage() {
   const [usuarios, setUsuarios] = useState([]);
@@ -83,45 +83,37 @@ function AdminAsignacionesPage() {
   }));
 
   return (
-    <div className="admin-asignaciones-container">
-      <div>
+    <div className="admin-asignaciones-page">
+      <div className="asignaciones-form">
         <h2>Gestión de Asignaciones</h2>
         {mensaje && <div className="mensaje-asignaciones">{mensaje}</div>}
 
         <form onSubmit={handleSubmit} className="form-asignacion">
-          <div className="form-grupo">
-            <label>Cliente</label>
-            <select name="usuario" value={form.usuario} onChange={handleChange}>
-              <option value="">Selecciona un cliente</option>
-              {usuarios.map((u) => (
-                <option key={u._id} value={u._id}>
-                  {u.nombre} ({u.correo})
-                </option>
-              ))}
-            </select>
-          </div>
+          <label>Cliente</label>
+          <select name="usuario" value={form.usuario} onChange={handleChange}>
+            <option value="">Selecciona un cliente</option>
+            {usuarios.map((u) => (
+              <option key={u._id} value={u._id}>
+                {u.nombre} ({u.correo})
+              </option>
+            ))}
+          </select>
 
-          <div className="form-grupo">
-            <label>Plan</label>
-            <select name="plan" value={form.plan} onChange={handleChange}>
-              <option value="">Selecciona un plan</option>
-              {planes.map((p) => (
-                <option key={p._id} value={p._id}>
-                  {p.nombre} ({p.nivel})
-                </option>
-              ))}
-            </select>
-          </div>
+          <label>Plan</label>
+          <select name="plan" value={form.plan} onChange={handleChange}>
+            <option value="">Selecciona un plan</option>
+            {planes.map((p) => (
+              <option key={p._id} value={p._id}>
+                {p.nombre} ({p.nivel})
+              </option>
+            ))}
+          </select>
 
-          <div className="form-grupo">
-            <label>Fecha de finalización</label>
-            <input type="date" name="fechaFin" value={form.fechaFin} onChange={handleChange} />
-          </div>
+          <label>Fecha de finalización</label>
+          <input type="date" name="fechaFin" value={form.fechaFin} onChange={handleChange} />
 
-          <div className="form-grupo">
-            <label>Observaciones</label>
-            <textarea name="observaciones" value={form.observaciones} onChange={handleChange} placeholder="Observaciones opcionales" />
-          </div>
+          <label>Observaciones</label>
+          <textarea name="observaciones" value={form.observaciones} onChange={handleChange} placeholder="Observaciones opcionales" />
 
           <button type="submit" className="btn-primario">
             Asignar plan
@@ -129,40 +121,51 @@ function AdminAsignacionesPage() {
         </form>
       </div>
 
-      <div className="asignaciones-por-cliente">
-        {clienteActivo ? (
-          <>
-            {asignacionesPorUsuario.find(u => u.usuario._id === clienteActivo)?.asignaciones.length === 0 ? (
-              <p>No hay asignaciones para este cliente.</p>
-            ) : (
-              asignacionesPorUsuario.find(u => u.usuario._id === clienteActivo)?.asignaciones.map((a) => (
-                <div key={a._id} className="asignacion-card">
-                  <div className="asignacion-header">
-                    <span>
-                      <b>Plan:</b> {a.plan?.nombre} ({a.plan?.nivel})
-                    </span>
-                    <button onClick={() => handleEliminar(a._id)} title="Eliminar asignación">
-                      🗑️
-                    </button>
+      <div className="asignaciones-lista">
+        <h3>Asignaciones por cliente</h3>
+        <div className="clientes-botones">
+          {usuarios.map((u) => (
+            <button key={u._id} onClick={() => setClienteActivo(u._id)} className={clienteActivo === u._id ? 'activo' : ''}>
+              {u.nombre}
+            </button>
+          ))}
+        </div>
+
+        <div className="asignaciones-cards">
+          {clienteActivo ? (
+            <>
+              {asignacionesPorUsuario.find(u => u.usuario._id === clienteActivo)?.asignaciones.length === 0 ? (
+                <p>No hay asignaciones para este cliente.</p>
+              ) : (
+                asignacionesPorUsuario.find(u => u.usuario._id === clienteActivo)?.asignaciones.map((a) => (
+                  <div key={a._id} className="asignacion-card">
+                    <div className="asignacion-header">
+                      <span>
+                        <b>Plan:</b> {a.plan?.nombre} ({a.plan?.nivel})
+                      </span>
+                      <button onClick={() => handleEliminar(a._id)} title="Eliminar asignación">
+                        🗑️
+                      </button>
+                    </div>
+                    <div>
+                      <b>Asignado:</b> {new Date(a.fechaAsignacion).toLocaleDateString()}
+                      <br />
+                      <b>Fin:</b> {a.fechaFin ? new Date(a.fechaFin).toLocaleDateString() : "Sin definir"}
+                      {a.observaciones && (
+                        <>
+                          <br />
+                          <b>Obs.:</b> {a.observaciones}
+                        </>
+                      )}
+                    </div>
                   </div>
-                  <div>
-                    <b>Asignado:</b> {new Date(a.fechaAsignacion).toLocaleDateString()}
-                    <br />
-                    <b>Fin:</b> {a.fechaFin ? new Date(a.fechaFin).toLocaleDateString() : "Sin definir"}
-                    {a.observaciones && (
-                      <>
-                        <br />
-                        <b>Obs.:</b> {a.observaciones}
-                      </>
-                    )}
-                  </div>
-                </div>
-              ))
-            )}
-          </>
-        ) : (
-          <p>Selecciona un cliente para ver sus asignaciones.</p>
-        )}
+                ))
+              )}
+            </>
+          ) : (
+            <p>Selecciona un cliente para ver sus asignaciones.</p>
+          )}
+        </div>
       </div>
     </div>
   );
