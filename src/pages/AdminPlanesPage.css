@@ -1,192 +1,172 @@
-/* Contenedor principal */
-.max-w-4xl {
-  max-width: 64rem;
+/* Fondo general */
+.admin-planes-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #121212, #1e1e1e);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
 }
 
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-.p-4 {
-  padding: 1rem;
-}
-.border {
-  border: 1px solid #030303;
-}
-.rounded {
-  border-radius: 0.5rem;
-}
-.shadow {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-}
-.bg-white {
-  background: #000000;
-}
-
-/* Botones y navegación */
-.flex {
-  display: flex;
-}
-.gap-2 {
-  gap: 0.5rem;
-}
-.mb-4 {
+/* Título */
+.admin-planes-title {
+  text-align: center;
+  font-size: 2rem;
   margin-bottom: 1rem;
+  color: #e63946;
 }
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-.bg-blue-600 {
-  background: #2563eb;
-}
-.bg-gray-200 {
-  background: #000000;
-}
-.text-white {
-  color: #fff;
-}
-.text-blue-600 {
-  color: #2563eb;
-}
-.text-green-600 {
-  color: #16a34a;
-}
-.text-red-600 {
-  color: #dc2626;
-}
-.rounded {
+
+/* Mensaje */
+.admin-planes-mensaje {
+  background: #1e293b;
+  color: #38bdf8;
+  padding: 0.8rem;
   border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
-/* Tabla */
-table {
-  border-collapse: collapse;
+/* Tabla de planes */
+.admin-planes-tabla {
   width: 100%;
-}
-th, td {
-  border: 1px solid #0a0a0a;
-  padding: 0.5rem;
-  text-align: left;
-}
-.bg-gray-100 {
-  background: #000000;
+  max-width: 1100px;
+  margin: 2rem auto;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #1e1e1e;
 }
 
-/* Mensajes */
-.bg-gray-100 {
-  background: #f3f4f6;
+.admin-planes-tabla th,
+.admin-planes-tabla td {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 0.95rem;
 }
-.text-sm {
-  font-size: 0.9rem;
+
+.admin-planes-tabla th {
+  background-color: #2a2a2a;
+  text-transform: uppercase;
+}
+
+.admin-planes-tabla tr:nth-child(even) {
+  background-color: #151515;
+}
+
+.admin-planes-tabla tr:hover {
+  background-color: #2c2c2c;
+}
+
+.acciones button {
+  margin-right: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.acciones .edit {
+  background-color: #007bff;
+  color: white;
+}
+
+.acciones .view {
+  background-color: #1d4ed8;
+  color: white;
+}
+
+.acciones .delete {
+  background-color: #e63946;
+  color: white;
+}
+
+/* Botones generales */
+.admin-planes-btn {
+  background: #2563eb;
+  color: #fff;
+  padding: 0.8rem 1.2rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+}
+
+.admin-planes-btn:hover {
+  background: #1d4ed8;
+}
+
+.admin-planes-btn.volver {
+  background: #444;
+}
+
+.admin-planes-btn.volver:hover {
+  background: #666;
 }
 
 /* Formulario */
-.space-y-4 > * + * {
-  margin-top: 1rem;
+.admin-planes-form {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #1e1e1e;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
-.block {
-  display: block;
-}
-.font-semibold {
-  font-weight: 600;
-}
-.w-full {
+
+.admin-planes-form input,
+.admin-planes-form textarea,
+.admin-planes-form select {
   width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #2a2a2a;
+  color: #fff;
 }
-.p-2 {
-  padding: 0.5rem;
+
+.admin-planes-form input::placeholder,
+.admin-planes-form textarea::placeholder {
+  color: #aaa;
 }
-.mt-2 {
-  margin-top: 0.5rem;
+
+.admin-planes-form input:focus,
+.admin-planes-form textarea:focus,
+.admin-planes-form select:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.5);
 }
 
 /* Ejercicios */
 .admin-planes-ejercicio {
-  border: 1px solid #000000;
-  border-radius: 0.5rem;
+  background: #121212;
+  padding: 1rem;
+  border: 1px solid #333;
+  border-radius: 8px;
   margin-bottom: 1rem;
-  padding: 0.5rem;
-  background: #000000;
 }
-.admin-planes-ejercicio-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 600;
+
+.admin-planes-ejercicio input {
   margin-bottom: 0.5rem;
 }
-.admin-planes-btn-quitar {
-  background: #dc2626;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 1.5rem;
-  height: 1.5rem;
-  cursor: pointer;
-  font-size: 1.1rem;
-  line-height: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.admin-planes-ejercicio-body {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.admin-planes-ejercicio-img {
-  min-width: 120px;
-  max-width: 160px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.3rem;
-}
-.admin-planes-img-placeholder {
-  width: 80px;
-  height: 80px;
-  background: #e5e7eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af;
-  font-size: 0.9rem;
-  border-radius: 0.3rem;
-}
-.admin-planes-ejercicio-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-.admin-planes-ejercicio-info input[type="text"],
-.admin-planes-ejercicio-info input[type="number"] {
-  width: 100%;
-  padding: 0.3rem;
-  border: 1px solid #000000;
-  border-radius: 0.3rem;
-}
-.admin-planes-ejercicio-info input[type="file"] {
-  margin-top: 0.2rem;
+
+/* Vista detalle */
+.admin-planes-detalle {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #1e1e1e;
+  padding: 2rem;
+  border-radius: 12px;
 }
 
-/* Botón agregar ejercicio */
-.bg-green-600 {
-  background: #16a34a;
+.admin-planes-detalle h4 {
+  margin-top: 1rem;
 }
-.mt-2 {
+
+.admin-planes-img {
   margin-top: 0.5rem;
-}
-
-/* Responsive */
-@media (max-width: 700px) {
-  .admin-planes-ejercicio-body {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
+  max-width: 100px;
+  border-radius: 8px;
 }

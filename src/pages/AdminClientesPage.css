@@ -2,7 +2,6 @@
 .admin-clientes-page {
   background: linear-gradient(135deg, #121212, #1e1e1e);
   color: white;
-  padding: 2rem;
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
   display: flex;

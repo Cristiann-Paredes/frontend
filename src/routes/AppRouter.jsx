@@ -6,23 +6,35 @@ import HomePage from '../pages/HomePage'
 import AdminClientesPage from '../pages/AdminClientesPage'
 import AdminPlanesPage from '../pages/AdminPlanesPage'
 import AdminAsignacionesPage from '../pages/AdminAsignacionesPage'
-
-
+import RegistroPage from '../pages/RegistroPage'
+import RecuperarPage from '../pages/RecuperarPage'
+import ConfirmarCuentaPage from '../pages/ConfirmarCuentaPage'
+import EditarPerfilPage from '../pages/EditarPerfilPage'
 
 import ProtectedRoute from './ProtectedRoute'
 import Navbar from '../components/Navbar'
 
-
 function AppRouter() {
   return (
     <>
-    
       <Navbar />
-      
-      
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+
         <Route path="/home" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/registro" element={<RegistroPage />} />
+        <Route path="/recuperar" element={<RecuperarPage />} />
+        <Route
+          path="/editar-perfil" 
+          element={
+            <ProtectedRoute>
+              <EditarPerfilPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="/confirmar/" element={<ConfirmarCuentaPage />} />   
+
         <Route
           path="/perfil"
           element={
@@ -32,13 +44,13 @@ function AppRouter() {
           }
         />
         <Route
-  path="/admin/clientes"
-  element={
-    <ProtectedRoute>
-      <AdminClientesPage />
-    </ProtectedRoute>
-  }
-/>
+          path="/admin/clientes"
+          element={
+            <ProtectedRoute>
+              <AdminClientesPage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/admin/asignaciones"
           element={
@@ -46,8 +58,7 @@ function AppRouter() {
               <AdminAsignacionesPage />
             </ProtectedRoute>
           }
-          />
-
+        />
         <Route
           path="/admin/planes"
           element={
@@ -55,18 +66,15 @@ function AppRouter() {
               <AdminPlanesPage />
             </ProtectedRoute>
           }
-/>
-
-        <Route 
-          path="/planes" 
+        />
+        <Route
+          path="/planes"
           element={
             <ProtectedRoute>
               <PlanesPage />
             </ProtectedRoute>
           }
         />
-        
-
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </>

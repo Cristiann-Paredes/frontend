@@ -22,7 +22,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh; /* Asegura que ocupe toda la pantalla */
-  padding: 1rem;
+  
   width: 100%; /* Asegura que ocupe todo el ancho */
 }
 

@@ -20,7 +20,6 @@ html, body, #root {
   flex-direction: column; /* Alinea el contenido en columna */
   justify-content: center;
   align-items: center;
-  padding: 1rem; /* Agrega espacio interno para evitar bordes pegados */
   overflow: hidden; /* Evita que el contenido desborde */
 }
 

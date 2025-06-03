@@ -1,10 +1,3 @@
-html, body, #root {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  font-family: 'Roboto', sans-serif;
-}
 
 /* Contenedor principal */
 .perfil-container {
@@ -21,7 +14,6 @@ html, body, #root {
   min-width: 260px;
   background-color: #1f2937;
   color: white;
-  padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,7 +82,7 @@ html, body, #root {
 
 .perfil-menu button {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 1rem 1.5rem;
   background: none;
   border: none;
   border-radius: 0.375rem;
@@ -112,7 +104,7 @@ html, body, #root {
 /* Cerrar sesión */
 .perfil-logout {
   margin-top: 1rem;
-  padding: 0.75rem 1rem;
+  padding: 0.80rem 1.5rem;
   width: 100%;
   background-color: #ef4444;
   color: white;
@@ -130,7 +122,6 @@ html, body, #root {
 /* Contenido principal */
 .perfil-main {
   flex-grow: 1;
-  padding: 2rem;
   background-image: url('C:/Users/crist/Desktop/front gym/gym-frontend/public/fotologo.png');
   background-size: cover;
   background-position: center;
@@ -160,7 +151,7 @@ html, body, #root {
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
-    padding: 1rem;
+   
   }
 
   .perfil-menu {
