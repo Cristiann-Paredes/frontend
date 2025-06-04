@@ -5,8 +5,10 @@ import AdminClientesPage from './AdminClientesPage'
 import AdminPlanesPage from './AdminPlanesPage'
 import AdminAsignacionesPage from './AdminAsignacionesPage'
 import PlanesPage from './PlanesPage'
-import EditarPerfilPage from './EditarPerfilPage'
+import EditarPerfilPage from './EditarPerfilPage';
 import AdminEstadoPage from './AdminEstadoPage';
+import ControlEstadoCliente from './ControlEstadoCliente';
+
 
 
 function PerfilPage() {
@@ -54,9 +56,10 @@ useEffect(() => {
 
   const renderContent = () => {
   if (rol === 'cliente') {
-    if (activeTab === 'editar-perfil') return <EditarPerfilPage />;
-    return <PlanesPage />;
-  }
+  if (activeTab === 'editar-perfil') return <EditarPerfilPage />;
+  if (activeTab === 'control estado') return <ControlEstadoCliente />;
+  return <PlanesPage />;
+}
   switch (activeTab) {
     case 'clientes':
       return <AdminClientesPage />;

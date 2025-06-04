@@ -1,0 +1,90 @@
+.estado-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #121212, #1e1e1e);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.estado-card {
+  background: #1e1e1e;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.estado-titulo {
+  color: #e63946;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.estado-foto {
+  margin: 1rem auto;
+}
+
+.estado-foto img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
+.barra-estado {
+  background-color: #2b2b2b;
+  border-radius: 9999px;
+  height: 30px;
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem auto 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.barra-progreso {
+  height: 100%;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: width 0.3s ease-in-out;
+}
+
+.barra-texto {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-weight: 600;
+  z-index: 2;
+}
+
+
+.barra-progreso.roja {
+  background: #e63946;
+}
+
+.barra-progreso.verde {
+  background: #28a745;
+}
+
+.estado-loading {
+  color: #fff;
+  text-align: center;
+  padding: 2rem;
+}
+
+.barra-progreso.verde {
+  background-color: #22c55e;
+}
+.barra-progreso.amarilla {
+  background-color: #facc15;
+}
+.barra-progreso.roja {
+  background-color: #ef4444;
+}

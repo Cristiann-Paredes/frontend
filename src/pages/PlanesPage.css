@@ -1,6 +1,6 @@
 /* Contenedor principal */
 .planes-page {
-  background: #0e0e0e;
+  background: linear-gradient(135deg, #121212, #1e1e1e);
   color: #ffffff;
   min-height: 100vh;
   font-family: 'Inter', sans-serif;

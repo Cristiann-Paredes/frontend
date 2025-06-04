@@ -133,7 +133,6 @@
 /* Contenido principal */
 .perfil-main {
   flex-grow: 1;
-  background-image: url('C:/Users/crist/Desktop/front gym/gym-frontend/public/fotologo.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
