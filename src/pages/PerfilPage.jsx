@@ -16,29 +16,41 @@ function PerfilPage() {
   const [imagenPerfil, setImagenPerfil] = useState('')
   const [error, setError] = useState('')
 
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (!token) {
-      setError('No autorizado')
-      return
-    }
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    setError('No autorizado');
+    return;
+  }
 
-    fetch('http://localhost:3000/api/perfil', {
-      headers: { Authorization: `Bearer ${token}` },
+  fetch('http://localhost:3000/api/perfil', {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then(async (res) => {
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.msg || 'Error al cargar el perfil');
+      }
+
+      if (data.rol) {
+        setRol(data.rol);
+        setNombre(data.nombre);
+        setImagenPerfil(data.imagenPerfil);
+        if (data.rol === 'cliente') setActiveTab('mis-planes');
+      } else {
+        throw new Error('Error al cargar el perfil');
+      }
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.rol) {
-          setRol(data.rol)
-          setNombre(data.nombre)
-          setImagenPerfil(data.imagenPerfil) 
-          if (data.rol === 'cliente') setActiveTab('mis-planes')
-        } else {
-          setError('Error al cargar el perfil')
-        }
-      })
-      .catch(() => setError('Error de conexión'))
-  }, [])
+    .catch((err) => {
+      setError(err.message);
+      // Redirigir al login automáticamente en 30 segundos
+      setTimeout(() => {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+      }, 20000);
+    });
+}, []);
+
 
   const renderContent = () => {
   if (rol === 'cliente') {
@@ -62,7 +74,22 @@ function PerfilPage() {
 };
 
 
-  if (error) return <p className="text-red-500 p-6">{error}</p>
+if (error) {
+  return (
+  <div className="perfil-error">
+  <p><strong>{error}</strong></p>
+
+  <img src="/conexion.png" alt="Logo" className="perfil-error-logo" />
+
+  <p>Serás redirigido al login...</p>
+  <button onClick={() => window.location.href = '/login'}>
+    Ir al login ahora
+  </button>
+</div>
+
+  );
+}
+
   if (!rol) return <p className="p-6">Cargando...</p>
 
   return (

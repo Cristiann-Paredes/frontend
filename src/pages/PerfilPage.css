@@ -6,7 +6,8 @@
   min-height: 100vh;
   width: 100%;
   background-color: #000000; /* Fondo negro */
-  overflow-x: hidden;
+  
+
 }
 
 /* Panel lateral */
@@ -57,7 +58,6 @@
 
 /* Nombre y rol */
 .perfil-nombre {
-  font-size: 19px;
   font-weight: 600;
   color: #ffffff;
   margin-top: 5px;
@@ -65,10 +65,21 @@
 }
 
 .perfil-rol {
-  font-size: 17px;
-  color: #fcfbfb;
+  color: #fcfdfb;
   margin-top: 5px;
   text-align: center;
+  display: block;
+}
+
+/* Corrige el layout en pantallas pequeñas */
+@media (max-width: 768px) {
+  .perfil-nombre,
+  .perfil-rol {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 0.95rem;
+  }
 }
 
 /* Menú lateral */
@@ -171,7 +182,48 @@
     margin-top: 1rem;
   }
 
-  .perfil-main {
-    padding: 1rem;
-  }
+}
+
+/*para el clientes inactivo*/
+.perfil-error {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #000000;
+  color: #ffffff;
+  padding: 15rem 15rem;
+  border-radius: 14px;
+  text-align: center;
+  max-width: 600px;
+  width: 90%;
+  font-size: 1.2rem;
+  box-shadow: 0 0 20px rgba(10, 10, 10, 0.4);
+  z-index: 9999;
+}
+
+.perfil-error p {
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+}
+
+.perfil-error button {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.9rem 1.6rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.perfil-error button:hover {
+  background-color: #c82333;
+}
+
+.perfil-error-logo {
+  width: 350px;
+  height: auto;
+  margin-bottom: 2rem;
 }
