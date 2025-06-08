@@ -9,7 +9,7 @@
 
 .estado-card {
   background: #1e1e1e;
-  padding: 2rem 2.5rem;
+  padding: 5rem 5.5rem;
   border-radius: 12px;
   max-width: 400px;
   width: 100%;
@@ -87,4 +87,35 @@
 }
 .barra-progreso.roja {
   background-color: #ef4444;
+}
+
+.estado-circular-container {
+  background-color: #181818;
+  padding: 2rem;
+  max-width: 300px;
+  margin: 2rem auto;
+  text-align: center;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+.circular-wrapper {
+  width: 180px;
+  height: 180px;
+  margin: 1.5rem auto;
+}
+
+.estado-nombre {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.estado-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-top: 1rem;
+  object-fit: cover;
+  border: 2px solid white;
 }

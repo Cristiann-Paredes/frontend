@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import './PlanesPage.css';
 
-
 const API_MIS_PLANES = "http://localhost:3000/api/mis-planes";
 const OPCIONES_MOTIVO = ['Lesión', 'Falta de tiempo', 'No entendí el ejercicio', 'Otro'];
 
@@ -36,7 +35,7 @@ const PlanesPage = () => {
     try {
       const res = await axios.get(API_MIS_PLANES, config);
       setAsignaciones(res.data);
-    } catch (err) {
+    } catch {
       setAsignaciones([]);
     }
     setLoading(false);
@@ -52,40 +51,46 @@ const PlanesPage = () => {
           <p>No tienes planes asignados.</p>
         ) : (
           <div className="planes-list">
-            {asignaciones.map(asig => (
-              <button key={asig._id} className="plan-btn" onClick={() => setPlanSeleccionado(asig)}>
-                <span className="plan-nombre">{asig.plan?.nombre}</span>
-                <span className="plan-desc">{asig.plan?.descripcion}</span>
-                <span className="plan-nivel">Nivel: {asig.plan?.nivel}</span>
-                <span className="plan-dia">Día: {asig.plan?.dia}</span>
-                <span className="plan-fecha">{asig.fechaFin ? `Hasta: ${asig.fechaFin.slice(0, 10)}` : ""}</span>
-              </button>
-            ))}
+            {asignaciones.map(asig => {
+              const total = asig.plan?.ejercicios?.length || 0;
+              const realizados = asig.estadoEjercicios?.filter(e => e.realizado).length || 0;
+              const completado = total && realizados / total >= 0.5;
+
+              return (
+                <button
+                  key={asig._id}
+                  className={`plan-btn ${completado ? 'plan-completado' : ''}`}
+                  onClick={() => setPlanSeleccionado(asig)}
+                >
+                  <span className="plan-nombre">{asig.plan?.nombre}</span>
+                  <span className="plan-nivel">Nivel: {asig.plan?.nivel}</span>
+                  <span className="plan-observaciones">{asig.observaciones?.trim() || 'Sin observaciones'}</span>
+                  {completado && <span className="check-icon">✔</span>}
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
     );
   }
 
-  const { plan, observaciones, fechaFin } = planSeleccionado;
+  const { plan, observaciones } = planSeleccionado;
 
   return (
     <div className="planes-page">
       <button
-  className="volver-btn"
-  onClick={async () => {
-    await fetchMisPlanes(); // Vuelve a traer los datos actualizados
-    setPlanSeleccionado(null);
-  }}
->
-  Volver
-</button>
+        className="volver-btn"
+        onClick={async () => {
+          await fetchMisPlanes();
+          setPlanSeleccionado(null);
+        }}
+      >
+        Volver
+      </button>
       <h2>{plan?.nombre}</h2>
-      <p><b>Descripción:</b> {plan?.descripcion}</p>
       <p><b>Nivel:</b> {plan?.nivel}</p>
-      <p><b>Observaciones:</b> {observaciones}</p>
-      <p><b>Día:</b> {plan?.dia}</p>
-      <p><b>Fecha fin:</b> {fechaFin ? fechaFin.slice(0, 10) : "Sin definir"}</p>
+      <p><b>Observaciones:</b> {observaciones || 'Sin observaciones'}</p>
       <h3>Ejercicios</h3>
 
       <div className="ejercicios-grid">

@@ -145,3 +145,63 @@
     max-width: 280px;
   }
 }
+
+
+.plan-completado {
+  border: 2px solid #38d16a;
+  background-color: #1a2e1f;
+  color: #b9fbc0;
+  position: relative;
+}
+
+.plan-estado-check {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.6rem;
+  font-size: 1.2rem;
+  color: #38d16a;
+}
+
+
+
+.plan-btn {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  padding: 1rem;
+  border-radius: 8px;
+  color: white;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.plan-btn:hover {
+  background: #2a2a2a;
+}
+
+.plan-nombre {
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: block;
+}
+
+.plan-nivel,
+.plan-observaciones {
+  display: block;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.plan-completado {
+  border: 2px solid #00ff88;
+  background: #102b1d;
+}
+
+.check-icon {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  color: #00ff88;
+  font-size: 1.2rem;
+}

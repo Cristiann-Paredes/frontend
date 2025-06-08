@@ -121,7 +121,7 @@ if (error) {
             <>
               <button className={activeTab === 'mis-planes' ? 'active' : ''} onClick={() => setActiveTab('mis-planes')}>Mis Planes</button>
               <button className={activeTab === 'editar-perfil' ? 'active' : ''} onClick={() => setActiveTab('editar-perfil')}>Editar Perfil</button>
-              <button className={activeTab === 'control estado' ? 'active' : ''} onClick={() => setActiveTab('control estado')}>Control de Estado</button>
+              <button className={activeTab === 'control estado' ? 'active' : ''} onClick={() => setActiveTab('control estado')}>Mi Estado</button>
 
             </>
           )}

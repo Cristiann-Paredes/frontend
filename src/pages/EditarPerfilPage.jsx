@@ -45,11 +45,7 @@ function EditarPerfilPage() {
   setMensaje(data.msg || 'Perfil actualizado');
 
   if (res.ok) {
-    
-    setTimeout(() => {
-      localStorage.removeItem('token');  //Borra el token
-      window.location.href = '/login';   //Redirige al login
-    }, 2500); // Espera 2 segundos para mostrar el mensaje
+   
   }
 };
 

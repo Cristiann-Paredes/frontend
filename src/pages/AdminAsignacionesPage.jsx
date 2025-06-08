@@ -9,8 +9,7 @@ function AdminAsignacionesPage() {
   const [form, setForm] = useState({
     usuario: "",
     plan: "",
-    fechaFin: "",
-    observaciones: "",
+    observaciones: ""
   });
   const [mensaje, setMensaje] = useState("");
   const [clienteActivo, setClienteActivo] = useState(null);
@@ -42,7 +41,7 @@ function AdminAsignacionesPage() {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
-    if (!form.usuario || !form.plan || !form.fechaFin) {
+    if (!form.usuario || !form.plan) {
       return setMensaje("❌ Por favor completa todos los campos.");
     }
 
@@ -52,7 +51,7 @@ function AdminAsignacionesPage() {
       });
 
       setMensaje("✅ Plan asignado correctamente");
-      setForm({ usuario: "", plan: "", fechaFin: "", observaciones: "" });
+      setForm({ usuario: "", plan: "", observaciones: "" });
 
       const res = await axios.get(`${API_URL}/asignaciones`, {
         headers: { Authorization: `Bearer ${token}` }
@@ -109,15 +108,15 @@ function AdminAsignacionesPage() {
             ))}
           </select>
 
-          <label>Fecha de finalización</label>
-          <input type="date" name="fechaFin" value={form.fechaFin} onChange={handleChange} />
-
           <label>Observaciones</label>
-          <textarea name="observaciones" value={form.observaciones} onChange={handleChange} placeholder="Observaciones opcionales" />
+          <textarea
+            name="observaciones"
+            value={form.observaciones}
+            onChange={handleChange}
+            placeholder="Observaciones opcionales"
+          />
 
-          <button type="submit" className="btn-primario">
-            Asignar plan
-          </button>
+          <button type="submit" className="btn-primario">Asignar plan</button>
         </form>
       </div>
 
@@ -143,20 +142,13 @@ function AdminAsignacionesPage() {
                       <span>
                         <b>Plan:</b> {a.plan?.nombre} ({a.plan?.nivel})
                       </span>
-                      <button onClick={() => handleEliminar(a._id)} title="Eliminar asignación">
-                        🗑️
-                      </button>
+                      <button onClick={() => handleEliminar(a._id)} title="Eliminar asignación">🗑️</button>
                     </div>
+
                     <div>
                       <b>Asignado:</b> {new Date(a.fechaAsignacion).toLocaleDateString()}
                       <br />
-                      <b>Fin:</b> {a.fechaFin ? new Date(a.fechaFin).toLocaleDateString() : "Sin definir"}
-                      {a.observaciones && (
-                        <>
-                          <br />
-                          <b>Obs.:</b> {a.observaciones}
-                        </>
-                      )}
+                      <b>Descripción:</b> {a.observaciones?.trim() ? a.observaciones : <span style={{ color: "#aaa" }}>Sin descripción</span>}
                     </div>
                   </div>
                 ))
