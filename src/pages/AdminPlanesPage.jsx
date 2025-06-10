@@ -7,11 +7,11 @@ function AdminPlanesPage() {
     nombre: '',
     descripcion: '',
     nivel: 'básico',
-    dia: 'Lunes',
     ejercicios: [{ nombre: '', repeticiones: '', videoURL: '', imagenURL: '' }],
   });
 
   const [mensaje, setMensaje] = useState('');
+  const [confirmacion, setConfirmacion] = useState(null);
   const [planes, setPlanes] = useState([]);
   const [editando, setEditando] = useState(false);
   const [idEditando, setIdEditando] = useState(null);
@@ -24,6 +24,15 @@ function AdminPlanesPage() {
     if (vista === 'listar') obtenerPlanes();
   }, [vista]);
 
+  const mostrarMensaje = (texto, tiempo = 3500) => {
+    setMensaje(texto);
+    setTimeout(() => setMensaje(''), tiempo);
+  };
+
+  const pedirConfirmacion = (texto, onConfirm) => {
+    setConfirmacion({ texto, onConfirm });
+  };
+
   const obtenerPlanes = async () => {
     try {
       const res = await fetch('http://localhost:3000/api/planes', {
@@ -32,7 +41,7 @@ function AdminPlanesPage() {
       const data = await res.json();
       if (res.ok) setPlanes(data.planes || data);
     } catch {
-      setMensaje('❌ Error al obtener los planes');
+      mostrarMensaje('❌ Error al obtener los planes');
     }
   };
 
@@ -64,9 +73,17 @@ function AdminPlanesPage() {
     setFormulario({ ...formulario, ejercicios: nuevos });
   };
 
-  const handleVerDetalle = (plan) => {
-    setPlanDetalle(plan);
-    setVista('detalle');
+  const confirmarAccion = (texto, onConfirm) => {
+    setConfirmacion({ texto, onConfirm });
+  };
+
+  const handleConfirmar = () => {
+    if (confirmacion && confirmacion.onConfirm) confirmacion.onConfirm();
+    setConfirmacion(null);
+  };
+
+  const handleCancelar = () => {
+    setConfirmacion(null);
   };
 
   const handleSubmit = async (e) => {
@@ -87,22 +104,21 @@ function AdminPlanesPage() {
       });
       const data = await res.json();
       if (res.ok) {
-        setMensaje(editando ? '✅ Plan actualizado' : '✅ Plan creado');
+        mostrarMensaje(editando ? '✅ Plan actualizado' : '✅ Plan creado');
         setFormulario({
           nombre: '',
           descripcion: '',
           nivel: 'básico',
-          dia: 'Lunes',
           ejercicios: [{ nombre: '', repeticiones: '', videoURL: '', imagenURL: '' }],
         });
         setEditando(false);
         setIdEditando(null);
         setVista('listar');
       } else {
-        setMensaje(`❌ Error: ${data.msg || data.message}`);
+        mostrarMensaje(`❌ Plan existente : ${data.msg || data.message}`);
       }
-    } catch (err) {
-      setMensaje('❌ Error al conectar con el servidor');
+    } catch {
+      mostrarMensaje('❌ Error al conectar con el servidor');
     }
   };
 
@@ -111,7 +127,6 @@ function AdminPlanesPage() {
       nombre: plan.nombre,
       descripcion: plan.descripcion,
       nivel: plan.nivel,
-      dia: plan.dia || 'Lunes',
       ejercicios: (plan.ejercicios || []).map((ej) => ({
         nombre: ej.nombre,
         repeticiones: ej.repeticiones,
@@ -125,83 +140,126 @@ function AdminPlanesPage() {
     setVista('crear');
   };
 
-  const handleEliminar = async (id) => {
-    if (!window.confirm('¿Seguro que deseas eliminar este plan?')) return;
-    try {
-      const res = await fetch(`http://localhost:3000/api/planes/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setMensaje('✅ Plan eliminado');
-        obtenerPlanes();
-      } else {
-        setMensaje(`❌ Error: ${data.msg || data.message}`);
+  const handleEliminar = (id) => {
+    confirmarAccion('¿Eliminar este plan?', async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/api/planes/${id}`, {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${getToken()}` },
+        });
+        const data = await res.json();
+        if (res.ok) {
+          mostrarMensaje('✅ Plan eliminado');
+          obtenerPlanes();
+        } else {
+          mostrarMensaje(`❌ Error: ${data.msg || data.message}`);
+        }
+      } catch {
+        mostrarMensaje('❌ Error al conectar con el servidor');
       }
-    } catch {
-      setMensaje('❌ Error al conectar con el servidor');
-    }
+    });
+  };
+
+  const handleVerDetalle = (plan) => {
+    setPlanDetalle(plan);
+    setVista('detalle');
   };
 
   return (
     <div className="admin-planes-page">
       <h2 className="admin-planes-title">Gestión de Planes</h2>
       {mensaje && <div className="admin-planes-mensaje">{mensaje}</div>}
+      {confirmacion && (
+        <div className="modal-confirmacion">
+          <p>{confirmacion.texto}</p>
+          <button onClick={handleConfirmar}>Confirmar</button>
+          <button onClick={handleCancelar}>Cancelar</button>
+        </div>
+      )}
 
       {vista === 'listar' && (
         <div className="admin-planes-listar">
-          <button onClick={() => setVista('crear')} className="admin-planes-btn crear">Crear nuevo plan</button>
+          <button
+            onClick={() => {
+              setFormulario({
+                nombre: '',
+                descripcion: '',
+                nivel: 'básico',
+                ejercicios: [{ nombre: '', repeticiones: '', videoURL: '', imagenURL: '' }],
+              });
+              setEditando(false);
+              setIdEditando(null);
+              setVista('crear');
+            }}
+            className="admin-planes-btn crear"
+          >
+            Crear nuevo plan
+          </button>
           <table className="admin-planes-tabla">
             <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Nivel</th>
-                <th>Día</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Descripción</th>
+    <th>Nivel</th>
+    <th>Acciones</th>
+  </tr>
+</thead>
+
             <tbody>
-              {planes.length === 0 ? (
-                <tr><td colSpan={4}>No hay planes registrados.</td></tr>
-              ) : (
-                planes.map((plan) => (
-                  <tr key={plan._id}>
-                    <td>{plan.nombre}</td>
-                    <td>{plan.nivel}</td>
-                    <td>{plan.dia}</td>
-                    <td className="acciones">
-                      <button onClick={() => handleEditar(plan)} className="edit">Editar</button>
-                      <button onClick={() => handleVerDetalle(plan)} className="view">Ver</button>
-                      <button onClick={() => handleEliminar(plan._id)} className="delete">Eliminar</button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
+  {planes.length === 0 ? (
+    <tr><td colSpan={4}>No hay planes registrados.</td></tr>
+  ) : (
+    planes.map((plan) => (
+      <tr key={plan._id}>
+        <td>{plan.nombre}</td>
+        <td>{plan.descripcion}</td>
+        <td>{plan.nivel}</td>
+        <td className="acciones">
+          <button onClick={() => handleEditar(plan)} className="edit">Editar</button>
+          <button onClick={() => handleVerDetalle(plan)} className="view">Ver</button>
+          <button onClick={() => handleEliminar(plan._id)} className="delete">Eliminar</button>
+        </td>
+      </tr>
+    ))
+  )}
+</tbody>
+
           </table>
         </div>
       )}
 
       {vista === 'detalle' && planDetalle && (
-        <div className="admin-planes-detalle">
-          <h3>{planDetalle.nombre}</h3>
-          <p>{planDetalle.descripcion}</p>
-          <p><b>Nivel:</b> {planDetalle.nivel}</p>
-          <p><b>Día:</b> {planDetalle.dia}</p>
-          <h4>Ejercicios</h4>
-          <ul>
-            {planDetalle.ejercicios.map((ej, idx) => (
-              <li key={idx}>
-                <b>{ej.nombre}</b> - {ej.repeticiones}
-                {ej.imagenURL && <img src={ej.imagenURL} alt={ej.nombre} className="admin-planes-img" />}
-                {ej.videoURL && <div><a href={ej.videoURL} target="_blank" rel="noreferrer">Ver video</a></div>}
-              </li>
-            ))}
-          </ul>
-          <button onClick={() => setVista('listar')} className="admin-planes-btn volver">Volver</button>
+  <div className="admin-planes-detalle">
+    <h3>{planDetalle.nombre}</h3>
+    <p>{planDetalle.descripcion}</p>
+    <p><b>Nivel:</b> {planDetalle.nivel}</p>
+    <h4>Ejercicios</h4>
+    <div className="admin-planes-detalle-ejercicios">
+      {planDetalle.ejercicios.map((ej, idx) => (
+        <div key={idx} className="admin-planes-ejercicio">
+          {ej.imagenURL ? (
+            <img src={ej.imagenURL} alt={`Ejercicio ${idx}`} className="admin-planes-preview" />
+          ) : (
+            <div className="admin-planes-preview" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc' }}>
+              Sin imagen
+            </div>
+          )}
+          <div className="admin-planes-ejercicio-content">
+            <p><b>{ej.nombre}</b></p>
+            <p>{ej.repeticiones}</p>
+            {ej.videoURL && (
+              <a href={ej.videoURL} target="_blank" rel="noreferrer" style={{ color: '#64b5f6' }}>
+                Ver video
+              </a>
+            )}
+          </div>
         </div>
-      )}
+      ))}
+    </div>
+    <button onClick={() => setVista('listar')} className="admin-planes-btn volver">Volver</button>
+  </div>
+)}
+
 
       {vista === 'crear' && (
         <form onSubmit={handleSubmit} className="admin-planes-form">
@@ -212,29 +270,30 @@ function AdminPlanesPage() {
             <option value="intermedio">Intermedio</option>
             <option value="avanzado">Avanzado</option>
           </select>
-          <select name="dia" value={formulario.dia} onChange={handleChange}>
-            <option value="Lunes">Lunes</option>
-            <option value="Martes">Martes</option>
-            <option value="Miércoles">Miércoles</option>
-            <option value="Jueves">Jueves</option>
-            <option value="Viernes">Viernes</option>
-            <option value="Sábado">Sábado</option>
-            <option value="Domingo">Domingo</option>
-          </select>
 
           {formulario.ejercicios.map((ej, idx) => (
             <div key={idx} className="admin-planes-ejercicio">
-              <input type="text" name="nombre" placeholder="Nombre del ejercicio" value={ej.nombre} onChange={(e) => handleEjercicioChange(idx, e)} required />
-              <input type="text" name="repeticiones" placeholder="Repeticiones" value={ej.repeticiones} onChange={(e) => handleEjercicioChange(idx, e)} required />
-              <input type="text" name="videoURL" placeholder="URL de video (opcional)" value={ej.videoURL} onChange={(e) => handleEjercicioChange(idx, e)} />
-              <Widget publicKey="643ce81cabfea0aa8567" onChange={(file) => handleImagenUpload(idx, file.cdnUrl)} />
-              <button type="button" className="admin-planes-btn eliminar" onClick={() => quitarEjercicio(idx)}>Quitar</button>
+              {ej.imagenURL ? (
+                <img src={ej.imagenURL} alt={`Ejercicio ${idx}`} className="admin-planes-preview" />
+              ) : (
+                <div className="admin-planes-preview" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc' }}>
+                  Sin imagen
+                </div>
+              )}
+              <div className="admin-planes-ejercicio-content">
+                <input type="text" name="nombre" placeholder="Nombre del ejercicio" value={ej.nombre} onChange={(e) => handleEjercicioChange(idx, e)} required />
+                <input type="text" name="repeticiones" placeholder="Repeticiones" value={ej.repeticiones} onChange={(e) => handleEjercicioChange(idx, e)} required />
+                <Widget publicKey="643ce81cabfea0aa8567" onChange={(file) => handleImagenUpload(idx, file.cdnUrl)} />
+                <button type="button" className="admin-planes-btn eliminar" onClick={() => quitarEjercicio(idx)}>Quitar</button>
+              </div>
             </div>
           ))}
 
-          <button type="button" onClick={agregarEjercicio} className="admin-planes-btn agregar">Agregar ejercicio</button>
-          <button type="submit" className="admin-planes-btn crear">{editando ? 'Actualizar' : 'Crear'} plan</button>
-          <button type="button" className="admin-planes-btn volver" onClick={() => setVista('listar')}>Volver a gestión</button>
+          <div className="admin-planes-form-buttons">
+            <button type="button" onClick={agregarEjercicio} className="admin-planes-btn agregar">Agregar ejercicio</button>
+            <button type="submit" className="admin-planes-btn crear">{editando ? 'Actualizar' : 'Crear'} plan</button>
+            <button type="button" className="admin-planes-btn volver" onClick={() => setVista('listar')}>Volver a gestión</button>
+          </div>
         </form>
       )}
     </div>

@@ -1,207 +1,166 @@
 /* Contenedor principal */
 .planes-page {
-  background: linear-gradient(135deg, #121212, #1e1e1e);
-  color: #ffffff;
+  background-color: #121212;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif;
+  color: white;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  
+  justify-content: space-between;
 }
 
-/* Título */
-.planes-page h2,
-.planes-page h3 {
-  color: #e63946;
-  margin: 1rem 0;
+.planes-page h2 {
+  font-size: 1.6rem;
+  color: #e53935;
+  margin-bottom: 1.5rem;
   text-align: center;
-}
-
-/* Botón volver */
-.volver-btn {
-  background: #e63946;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 8px;
-  margin-bottom: 1.2rem;
-  cursor: pointer;
   font-weight: bold;
-  width: 100%;
-  max-width: 400px;
 }
 
-/* Lista de planes */
+/* Lista de botones de planes */
 .planes-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 100%;
 }
 
+/* Botón individual de plan */
 .plan-btn {
-  background: #1a1a1a;
+  background-color: #1e1e1e;
+  border: none;
   border-radius: 10px;
   padding: 1rem;
-  border: 1px solid #2c2c2c;
   color: white;
   text-align: left;
-  width: 100%;
-  transition: background 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: background-color 0.3s ease;
 }
 
 .plan-btn:hover {
-  background: #2a2a2a;
+  background-color: #2c2c2c;
 }
 
-/* Texto dentro de los botones */
+.plan-btn.plan-completado {
+  border: 2px solid #00c853;
+  background-color: #004d40;
+}
+
 .plan-nombre {
-  font-size: 1.1rem;
-  font-weight: bold;
-  display: block;
+  font-size: 1rem;
   margin-bottom: 0.3rem;
-}
-.plan-desc, .plan-nivel, .plan-dia, .plan-fecha {
-  font-size: 0.9rem;
-  margin: 2px 0;
+  color: #ffffff;
 }
 
-/* Tarjetas de ejercicios */
+.plan-nivel,
+.plan-observaciones {
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: #d0d0d0;
+}
+
+/* Ícono de check de plan completo */
+.check-icon {
+  color: #00e676;
+  font-size: 1.2rem;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+/* Detalle del plan */
 .ejercicios-grid {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  width: 100%;
-  max-width: 500px;
-  margin-top: 1.5rem;
+  gap: 1rem;
 }
 
 .ejercicio-card {
-  background: #1a1a1a;
-  border-radius: 12px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
   padding: 1rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.4);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .ejercicio-img {
-  max-width: 100%;
-  width: 250px;
+  width: 100%;
+  max-width: 250px;
   height: auto;
   border-radius: 8px;
-  object-fit: contain;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.8rem;
+  object-fit: cover;
 }
 
 .ejercicio-info {
-  text-align: center;
   width: 100%;
+  text-align: center;
 }
 
 .ejercicio-info h4 {
+  margin-bottom: 0.3rem;
   font-size: 1rem;
-  margin: 0.2rem 0;
+  color: #ffffff;
 }
 
 .ejercicio-info p {
   font-size: 0.9rem;
-  color: #ccc;
   margin-bottom: 0.5rem;
+  color: #cfcfcf;
 }
 
-/* Checkbox + motivo */
-.ejercicio-info label {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  justify-content: center;
-  margin: 0.4rem 0;
-  font-weight: 500;
-  font-size: 0.95rem;
+/* Checkbox */
+.ejercicio-info input[type="checkbox"] {
+  margin-right: 0.5rem;
 }
 
+/* Select motivo */
 .ejercicio-info select {
   width: 100%;
   padding: 0.5rem;
+  margin-top: 0.5rem;
   border-radius: 6px;
-  border: 1px solid #444;
-  background: #2a2a2a;
+  border: none;
+  background-color: #2e2e2e;
   color: white;
-  margin-top: 0.3rem;
+  font-size: 0.9rem;
 }
 
-/* Responsive ajustes */
+/* Botón volver */
+.volver-btn {
+  width: 100%;
+  background-color: #d32f2f;
+  color: white;
+  font-weight: bold;
+  padding: 0.9rem;
+  margin-top: 2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.volver-btn:hover {
+  background-color: #b71c1c;
+}
+
+/* Responsive */
 @media (min-width: 768px) {
+  .planes-page {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
   .ejercicios-grid {
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
   }
 
   .ejercicio-card {
-    max-width: 280px;
+    width: calc(50% - 0.5rem);
   }
-}
-
-
-.plan-completado {
-  border: 2px solid #38d16a;
-  background-color: #1a2e1f;
-  color: #b9fbc0;
-  position: relative;
-}
-
-.plan-estado-check {
-  position: absolute;
-  top: 0.4rem;
-  right: 0.6rem;
-  font-size: 1.2rem;
-  color: #38d16a;
-}
-
-
-
-.plan-btn {
-  background: #1e1e1e;
-  border: 1px solid #333;
-  padding: 1rem;
-  border-radius: 8px;
-  color: white;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 1rem;
-  position: relative;
-}
-
-.plan-btn:hover {
-  background: #2a2a2a;
-}
-
-.plan-nombre {
-  font-size: 1.2rem;
-  font-weight: bold;
-  display: block;
-}
-
-.plan-nivel,
-.plan-observaciones {
-  display: block;
-  font-size: 0.9rem;
-  color: #ccc;
-}
-
-.plan-completado {
-  border: 2px solid #00ff88;
-  background: #102b1d;
-}
-
-.check-icon {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  color: #00ff88;
-  font-size: 1.2rem;
 }

@@ -1,49 +1,81 @@
-/* AdminAsignacionesPage.css */
-
 .admin-asignaciones-page {
   background: linear-gradient(135deg, #121212, #1e1e1e);
   color: white;
   min-height: 100vh;
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
+  font-family: 'Roboto', sans-serif;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
-.asignaciones-form, .asignaciones-lista {
+.asignaciones-form,
+.asignaciones-lista {
+  flex: 1;
+  min-width: 320px;
   background: #1f1f1f;
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  flex: 1;
-  max-width: 600px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  font-family: 'Roboto', sans-serif;
-}
-
-.asignaciones-lista {
-  scrollbar-color: #444 #1f1f1f;
-  border-radius: 10px;
-  padding: 1rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  width: 100%;
-  max-width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 
 h2, h3 {
   text-align: center;
-  margin-bottom: 1.5rem;
   font-size: 1.8rem;
-  color: #e63946;
+  color: #e53935;
+  margin-bottom: 1.5rem;
 }
 
 .mensaje-asignaciones {
   background: #2a2a2a;
   padding: 0.8rem;
-  margin-bottom: 1rem;
   border-radius: 6px;
   text-align: center;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #00e676;
+  box-shadow: 0 0 8px rgba(0, 255, 100, 0.2);
+}
+
+.modal-confirmacion {
+  position: fixed;
+  top: 50%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  background-color: #1f1f1f;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: white;
+  width: 280px;
+  max-width: 90%;
+}
+
+.modal-confirmacion button {
+  padding: 10px 20px;
+  font-weight: bold;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-confirmacion .confirmar {
+  background-color: #2e7d32;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.modal-confirmacion .cancelar {
+  background-color: #c62828;
+  color: white;
 }
 
 .form-asignacion {
@@ -57,20 +89,13 @@ h2, h3 {
 }
 
 .form-asignacion select,
-.form-asignacion input,
 .form-asignacion textarea {
   padding: 0.7rem;
   border-radius: 6px;
   border: 1px solid #333;
   background: #2a2a2a;
   color: white;
-}
-
-.form-asignacion select:focus,
-.form-asignacion input:focus,
-.form-asignacion textarea:focus {
-  border-color: #e63946;
-  outline: none;
+  font-size: 1rem;
 }
 
 .btn-primario {
@@ -93,6 +118,7 @@ h2, h3 {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 1rem;
+  justify-content: center;
 }
 
 .clientes-botones button {
@@ -105,15 +131,16 @@ h2, h3 {
 }
 
 .clientes-botones button.activo {
-  background: #e63946;
+  background: #e53935;
 }
 
 .asignaciones-cards {
-  max-height: 400px;
+  max-height: 680px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding-right: 4px; /* para espacio del scrollbar */
 }
 
 .asignacion-card {
@@ -121,6 +148,7 @@ h2, h3 {
   padding: 1rem;
   border-radius: 8px;
   border: 1px solid #334155;
+  color: white;
 }
 
 .asignacion-header {
@@ -137,4 +165,51 @@ h2, h3 {
   color: white;
   cursor: pointer;
   font-size: 1.2rem;
+}
+
+.asignacion-descripcion {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: #bbb;
+}
+
+/* 📱 Responsivo */
+@media (max-width: 768px) {
+  .admin-asignaciones-page {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .asignaciones-form,
+  .asignaciones-lista {
+    padding: 1.5rem;
+  }
+
+  .modal-confirmacion {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .asignaciones-cards {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  h2, h3 {
+    font-size: 1.5rem;
+  }
+
+  .form-asignacion select,
+  .form-asignacion textarea {
+    font-size: 0.95rem;
+  }
+
+  .btn-primario {
+    font-size: 0.95rem;
+  }
+
+  .asignaciones-cards {
+    max-height: 250px;
+  }
 }

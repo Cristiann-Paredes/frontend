@@ -18,12 +18,17 @@ const PlanesPage = () => {
   useEffect(() => {
     if (planSeleccionado) {
       const estadoInicial = {};
-      planSeleccionado.estadoEjercicios?.forEach((estado, idx) => {
+      const estadoArray = Array.isArray(planSeleccionado.estadoEjercicios)
+        ? planSeleccionado.estadoEjercicios
+        : [];
+
+      estadoArray.forEach((estado, idx) => {
         estadoInicial[idx] = {
-          realizado: estado.realizado,
-          motivo: estado.motivo || ''
+          realizado: estado?.realizado || false,
+          motivo: estado?.motivo || ''
         };
       });
+
       setEjerciciosEstado(estadoInicial);
     }
   }, [planSeleccionado]);
@@ -53,7 +58,9 @@ const PlanesPage = () => {
           <div className="planes-list">
             {asignaciones.map(asig => {
               const total = asig.plan?.ejercicios?.length || 0;
-              const realizados = asig.estadoEjercicios?.filter(e => e.realizado).length || 0;
+              const realizados = Array.isArray(asig.estadoEjercicios)
+                ? asig.estadoEjercicios.filter(e => e?.realizado === true).length
+                : 0;
               const completado = total && realizados / total >= 0.5;
 
               return (
@@ -63,7 +70,8 @@ const PlanesPage = () => {
                   onClick={() => setPlanSeleccionado(asig)}
                 >
                   <span className="plan-nombre">{asig.plan?.nombre}</span>
-                  <span className="plan-nivel">Nivel: {asig.plan?.nivel}</span>
+                  <span className="descripcion"> {asig.plan?.descripcion || 'Sin descripción'} </span><br />
+                  <span className="plan-nivel">Nivel: {asig.plan?.nivel}</span> <br />
                   <span className="plan-observaciones">{asig.observaciones?.trim() || 'Sin observaciones'}</span>
                   {completado && <span className="check-icon">✔</span>}
                 </button>
@@ -79,74 +87,80 @@ const PlanesPage = () => {
 
   return (
     <div className="planes-page">
-      <button
-        className="volver-btn"
-        onClick={async () => {
-          await fetchMisPlanes();
-          setPlanSeleccionado(null);
-        }}
-      >
-        Volver
-      </button>
-      <h2>{plan?.nombre}</h2>
-      <p><b>Nivel:</b> {plan?.nivel}</p>
-      <p><b>Observaciones:</b> {observaciones || 'Sin observaciones'}</p>
-      <h3>Ejercicios</h3>
+      <div className="planes-detalle-content">
+        <h2>{plan?.nombre}</h2>
+        <p><b>Descripción:</b> {plan?.descripcion || 'Sin descripción'}</p>
+        <p><b>Nivel:</b> {plan?.nivel}</p>
+        <p><b>Observaciones:</b> {observaciones || 'Sin observaciones'}</p>
+        <h3>Ejercicios</h3>
 
-      <div className="ejercicios-grid">
-        {plan.ejercicios?.map((ej, idx) => (
-          <div key={idx} className="ejercicio-card">
-            {ej.imagenURL && <img src={ej.imagenURL} alt={ej.nombre} className="ejercicio-img" />}
-            <div className="ejercicio-info">
-              <h4>{ej.nombre}</h4>
-              <p>{ej.repeticiones}</p>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={ejerciciosEstado[idx]?.realizado || false}
-                  onChange={async (e) => {
-                    const checked = e.target.checked;
-                    setEjerciciosEstado(prev => ({
-                      ...prev,
-                      [idx]: { ...prev[idx], realizado: checked, motivo: checked ? '' : prev[idx]?.motivo || '' }
-                    }));
-                    await axios.patch(`http://localhost:3000/api/asignaciones/${planSeleccionado._id}/ejercicio`, {
-                      idx,
-                      realizado: checked,
-                      motivo: checked ? '' : ejerciciosEstado[idx]?.motivo || ''
-                    }, {
-                      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-                    });
-                  }}
-                /> Realizado ✅
-              </label>
-              {!ejerciciosEstado[idx]?.realizado && (
-                <select
-                  value={ejerciciosEstado[idx]?.motivo || ''}
-                  onChange={async (e) => {
-                    const value = e.target.value;
-                    setEjerciciosEstado(prev => ({
-                      ...prev,
-                      [idx]: { ...prev[idx], motivo: value }
-                    }));
-                    await axios.patch(`http://localhost:3000/api/asignaciones/${planSeleccionado._id}/ejercicio`, {
-                      idx,
-                      realizado: false,
-                      motivo: value
-                    }, {
-                      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-                    });
-                  }}
-                >
-                  <option value="">Motivo si no se realizó</option>
-                  {OPCIONES_MOTIVO.map((opt, i) => (
-                    <option key={i} value={opt}>{opt}</option>
-                  ))}
-                </select>
-              )}
+        <div className="ejercicios-grid">
+          {plan.ejercicios?.map((ej, idx) => (
+            <div key={idx} className="ejercicio-card">
+              {ej.imagenURL && <img src={ej.imagenURL} alt={ej.nombre} className="ejercicio-img" />}
+              <div className="ejercicio-info">
+                <h4>{ej.nombre}</h4>
+                <p>{ej.repeticiones}</p>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={ejerciciosEstado[idx]?.realizado || false}
+                    onChange={async (e) => {
+                      const checked = e.target.checked;
+                      setEjerciciosEstado(prev => ({
+                        ...prev,
+                        [idx]: { ...prev[idx], realizado: checked, motivo: checked ? '' : prev[idx]?.motivo || '' }
+                      }));
+                      await axios.patch(`http://localhost:3000/api/asignaciones/${planSeleccionado._id}/ejercicio`, {
+                        idx,
+                        realizado: checked,
+                        motivo: checked ? '' : ejerciciosEstado[idx]?.motivo || ''
+                      }, {
+                        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                      });
+                    }}
+                  /> Realizado ✅
+                </label>
+                {!ejerciciosEstado[idx]?.realizado && (
+                  <select
+                    value={ejerciciosEstado[idx]?.motivo || ''}
+                    onChange={async (e) => {
+                      const value = e.target.value;
+                      setEjerciciosEstado(prev => ({
+                        ...prev,
+                        [idx]: { ...prev[idx], motivo: value }
+                      }));
+                      await axios.patch(`http://localhost:3000/api/asignaciones/${planSeleccionado._id}/ejercicio`, {
+                        idx,
+                        realizado: false,
+                        motivo: value
+                      }, {
+                        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                      });
+                    }}
+                  >
+                    <option value="">Motivo si no se realizó</option>
+                    {OPCIONES_MOTIVO.map((opt, i) => (
+                      <option key={i} value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+      </div>
+
+      <div className="volver-container">
+        <button
+          className="volver-btn"
+          onClick={async () => {
+            await fetchMisPlanes();
+            setPlanSeleccionado(null);
+          }}
+        >
+          Volver
+        </button>
       </div>
     </div>
   );

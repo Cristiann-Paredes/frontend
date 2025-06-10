@@ -1,3 +1,4 @@
+// ...importaciones
 import { useEffect, useState } from 'react'
 import './AdminClientesPage.css'
 
@@ -6,6 +7,8 @@ function AdminClientesPage() {
   const [error, setError] = useState('')
   const [clienteSeleccionado, setClienteSeleccionado] = useState(null)
   const [mostrarSeccion, setMostrarSeccion] = useState('tabla')
+  const [mensaje, setMensaje] = useState('')
+  const [confirmacion, setConfirmacion] = useState(null)
   const [nuevoCliente, setNuevoCliente] = useState({
     nombre: '',
     correo: '',
@@ -16,18 +19,41 @@ function AdminClientesPage() {
 
   const token = localStorage.getItem('token')
 
+  const mostrarMensaje = (texto, tiempo = 3000) => {
+    setMensaje(texto)
+    setTimeout(() => setMensaje(''), tiempo)
+  }
+
+  const pedirConfirmacion = (texto, onConfirm) => {
+    setConfirmacion({ texto, onConfirm })
+  }
+
+  const handleConfirmar = () => {
+    if (confirmacion && confirmacion.onConfirm) confirmacion.onConfirm()
+    setConfirmacion(null)
+  }
+  const handleNombreChange = (e, tipo) => {
+  const soloLetras = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase()
+
+  if (tipo === 'nuevo') {
+    setNuevoCliente({ ...nuevoCliente, nombre: soloLetras })
+  } else if (tipo === 'editar') {
+    setClienteSeleccionado({ ...clienteSeleccionado, nombre: soloLetras })
+  }
+}
+
+
+  const handleCancelar = () => {
+    setConfirmacion(null)
+  }
+
   const fetchClientes = async () => {
     try {
       const res = await fetch('http://localhost:3000/api/clientes', {
         headers: { Authorization: `Bearer ${token}` }
       })
-
-      if (!res.ok) {
-        const errData = await res.json()
-        throw new Error(errData.msg || 'Error al cargar clientes')
-      }
-
       const data = await res.json()
+      if (!res.ok) throw new Error(data.msg || 'Error al cargar clientes')
       setClientes(data)
     } catch (err) {
       setError(err.message)
@@ -35,40 +61,34 @@ function AdminClientesPage() {
   }
 
   useEffect(() => {
-    if (token) {
-      fetchClientes()
-    } else {
-      setError('No autorizado')
-    }
+    if (token) fetchClientes()
+    else setError('No autorizado')
   }, [token])
 
-  const toggleEstado = async (id) => {
-    try {
-      const res = await fetch(`http://localhost:3000/api/clientes/${id}/estado`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${token}` }
-      })
-
-      if (!res.ok) {
-        const err = await res.json()
-        throw new Error(err.msg)
+  const toggleEstado = (id) => {
+    const cliente = clientes.find(c => c._id === id)
+    const texto = cliente.estado ? '¿Inactivar este cliente?' : '¿Activar este cliente?'
+    pedirConfirmacion(texto, async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/api/clientes/${id}/estado`, {
+          method: 'PATCH',
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        const data = await res.json()
+        if (res.ok) {
+          setClientes(clientes.map(c => c._id === id ? { ...c, estado: !c.estado } : c))
+          mostrarMensaje(data.msg || 'Estado actualizado')
+        } else {
+          mostrarMensaje(data.msg || 'Error al cambiar estado')
+        }
+      } catch {
+        mostrarMensaje('❌ Error al conectar con el servidor')
       }
-
-      const data = await res.json()
-      alert(data.msg)
-
-      setClientes((prevClientes) =>
-        prevClientes.map((cliente) =>
-          cliente._id === id ? { ...cliente, estado: !cliente.estado } : cliente
-        )
-      )
-    } catch (err) {
-      alert(err.message || 'Error al actualizar estado')
-    }
+    })
   }
 
   const handleEditar = (id) => {
-    const cliente = clientes.find((c) => c._id === id)
+    const cliente = clientes.find(c => c._id === id)
     setClienteSeleccionado(cliente)
     setMostrarSeccion('editar')
   }
@@ -77,79 +97,61 @@ function AdminClientesPage() {
     try {
       const res = await fetch(`http://localhost:3000/api/clientes/${clienteSeleccionado._id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(clienteSeleccionado)
       })
-
       const data = await res.json()
       if (res.ok) {
-        alert(data.msg)
-        setClientes(clientes.map((c) => (c._id === clienteSeleccionado._id ? clienteSeleccionado : c)))
+        mostrarMensaje(data.msg || 'Cliente actualizado')
+        setClientes(clientes.map(c => c._id === clienteSeleccionado._id ? clienteSeleccionado : c))
         setClienteSeleccionado(null)
         setMostrarSeccion('tabla')
       } else {
-        alert(data.msg)
+        mostrarMensaje(data.msg || 'Error al actualizar cliente')
       }
     } catch {
-      alert('Error al actualizar el cliente')
+      mostrarMensaje('❌ Error al actualizar cliente')
     }
   }
 
-  const handleEliminar = async (id) => {
-    const confirmacion = window.confirm('¿Estás seguro de que deseas eliminar este cliente?')
-   
-    if (!confirmacion) return
-
-    try {
-      const res = await fetch(`http://localhost:3000/api/clientes/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` }
-      })
-
-      if (!res.ok) {
-        const err = await res.json()
-        throw new Error(err.msg)
+  const handleEliminar = (id) => {
+    pedirConfirmacion('¿Estás seguro de que deseas eliminar este cliente?', async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/api/clientes/${id}`, {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        const data = await res.json()
+        if (res.ok) {
+          mostrarMensaje(data.msg || 'Cliente eliminado')
+          setClientes(clientes.filter(c => c._id !== id))
+        } else {
+          mostrarMensaje(data.msg || 'Error al eliminar cliente')
+        }
+      } catch {
+        mostrarMensaje('❌ Error al conectar con el servidor')
       }
-
-      const data = await res.json()
-      alert(data.msg)
-      setClientes(clientes.filter((c) => c._id !== id))
-    } catch (err) {
-      alert(err.message || 'Error al eliminar cliente')
-    }
+    })
   }
 
   const handleCrearCliente = async () => {
     try {
       const res = await fetch('http://localhost:3000/api/auth/registro', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          nombre: nuevoCliente.nombre,
-          correo: nuevoCliente.correo,
-          password: nuevoCliente.password,
-          rol: nuevoCliente.rol
-        })
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify(nuevoCliente)
       })
-
       const data = await res.json()
       if (res.ok) {
-        alert(data.msg || 'Cliente creado correctamente')
-      
+        mostrarMensaje(data.msg || '✅ Cliente creado')
         setClientes([...clientes, { ...nuevoCliente, _id: data.cliente._id }])
         setNuevoCliente({ nombre: '', correo: '', password: '', estado: true, rol: 'cliente' })
         setMostrarSeccion('tabla')
       } else {
-        alert(data.msg || 'Error al crear el cliente')
+        mostrarMensaje(data.msg || '❌ Error al crear cliente')
       }
-    } catch (err) {
-      
+    } catch {
+      mostrarMensaje('❌ Error al conectar con el servidor')
     }
   }
 
@@ -157,23 +159,20 @@ function AdminClientesPage() {
     <div className="admin-clientes-page">
       <h2>Gestión de Clientes</h2>
 
+      {mensaje && <div className="mensaje-accion">{mensaje}</div>}
+      {confirmacion && (
+        <div className="modal-confirmacion">
+          <p>{confirmacion.texto}</p>
+          <button onClick={handleConfirmar}>Confirmar</button>
+          <button onClick={handleCancelar}>Cancelar</button>
+        </div>
+      )}
+
       <div className="toggle-buttons">
-        <button
-          className={mostrarSeccion === 'tabla' ? 'active' : ''}
-          onClick={() => {
-            setMostrarSeccion('tabla')
-            setClienteSeleccionado(null)
-          }}
-        >
+        <button className={mostrarSeccion === 'tabla' ? 'active' : ''} onClick={() => setMostrarSeccion('tabla')}>
           Ver Tabla de Clientes
         </button>
-        <button
-          className={mostrarSeccion === 'formulario' ? 'active' : ''}
-          onClick={() => {
-            setMostrarSeccion('formulario')
-            setClienteSeleccionado(null)
-          }}
-        >
+        <button className={mostrarSeccion === 'formulario' ? 'active' : ''} onClick={() => setMostrarSeccion('formulario')}>
           Agregar Nuevo Cliente
         </button>
       </div>
@@ -181,48 +180,29 @@ function AdminClientesPage() {
       {error && <p className="error-msg">{error}</p>}
 
       {mostrarSeccion === 'formulario' && (
-        <div className="cliente-form">
-          <h3>Crear Nuevo Cliente</h3>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              handleCrearCliente()
-            }}
-          >
-            <label>Nombre</label>
-            <input
-              type="text"
-              value={nuevoCliente.nombre}
-              onChange={(e) => setNuevoCliente({ ...nuevoCliente, nombre: e.target.value })}
-            />
-            <label>Correo</label>
-            <input
-              type="email"
-              value={nuevoCliente.correo}
-              onChange={(e) => setNuevoCliente({ ...nuevoCliente, correo: e.target.value })}
-            />
-            <label>Contraseña</label>
-            <input
-              type="password"
-              value={nuevoCliente.password}
-              onChange={(e) => setNuevoCliente({ ...nuevoCliente, password: e.target.value })}
-            />
-            <label>Rol</label>
-            <select
-              value={nuevoCliente.rol}
-              onChange={(e) => setNuevoCliente({ ...nuevoCliente, rol: e.target.value })}
-            >
-              <option value="cliente">Cliente</option>
-              <option value="admin">Admin</option>
-            </select>
-            <button type="submit" className="submit">Crear</button>
-          </form>
-        </div>
+        <form className="cliente-form" onSubmit={(e) => {
+          e.preventDefault()
+          handleCrearCliente()
+        }}>
+          <label>Nombre</label>
+          <input type="text" value={nuevoCliente.nombre} onChange={(e) => handleNombreChange(e, 'nuevo')} />
+          <label>Correo</label>
+          <input type="email" value={nuevoCliente.correo} onChange={(e) => setNuevoCliente({ ...nuevoCliente, correo: e.target.value })} />
+          <label>Contraseña</label>
+          <input type="password" value={nuevoCliente.password} onChange={(e) => setNuevoCliente({ ...nuevoCliente, password: e.target.value })} />
+          <label>Rol</label>
+          <select value={nuevoCliente.rol} onChange={(e) => setNuevoCliente({ ...nuevoCliente, rol: e.target.value })}>
+            <option value="cliente">Cliente</option>
+            <option value="admin">Admin</option>
+          </select>
+          <button type="submit" className="submit">Crear</button>
+          <button className="cancel" onClick={() => setMostrarSeccion('tabla')}>Cancelar</button>
+
+        </form>
       )}
 
       {mostrarSeccion === 'tabla' && (
         <div className="clientes-table">
-          <h3>Lista de Clientes</h3>
           <table>
             <thead>
               <tr>
@@ -233,21 +213,15 @@ function AdminClientesPage() {
               </tr>
             </thead>
             <tbody>
-              {clientes.map((cliente) => (
-                <tr key={cliente._id}>
-                  <td>{cliente.nombre}</td>
-                  <td>{cliente.correo}</td>
-                  <td>
-                    <span className={`estado ${cliente.estado ? 'activo' : 'inactivo'}`}>
-                      {cliente.estado ? 'Activo' : 'Inactivo'}
-                    </span>
-                  </td>
+              {clientes.map((c) => (
+                <tr key={c._id}>
+                  <td>{c.nombre}</td>
+                  <td>{c.correo}</td>
+                  <td><span className={`estado ${c.estado ? 'activo' : 'inactivo'}`}>{c.estado ? 'Activo' : 'Inactivo'}</span></td>
                   <td className="actions">
-                    <button className="edit" onClick={() => handleEditar(cliente._id)}>Editar</button>
-                    <button className="delete" onClick={() => handleEliminar(cliente._id)}>Eliminar</button>
-                    <button onClick={() => toggleEstado(cliente._id)}>
-                      {cliente.estado ? 'Inactivar' : 'Activar'}
-                    </button>
+                    <button className="edit" onClick={() => handleEditar(c._id)}>Editar</button>
+                    <button className="delete" onClick={() => handleEliminar(c._id)}>Eliminar</button>
+                    <button onClick={() => toggleEstado(c._id)}>{c.estado ? 'Inactivar' : 'Activar'}</button>
                   </td>
                 </tr>
               ))}
@@ -257,47 +231,22 @@ function AdminClientesPage() {
       )}
 
       {mostrarSeccion === 'editar' && clienteSeleccionado && (
-        <div className="cliente-form">
-          <h3>Editar Cliente</h3>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              handleActualizarCliente()
-            }}
-          >
-            <label>Nombre</label>
-            <input
-              type="text"
-              value={clienteSeleccionado.nombre}
-              onChange={(e) => setClienteSeleccionado({ ...clienteSeleccionado, nombre: e.target.value })}
-            />
-            <label>Correo</label>
-            <input
-              type="email"
-              value={clienteSeleccionado.correo}
-              onChange={(e) => setClienteSeleccionado({ ...clienteSeleccionado, correo: e.target.value })}
-            />
-            <label>Estado</label>
-            <select
-              value={clienteSeleccionado.estado ? 'activo' : 'inactivo'}
-              onChange={(e) => setClienteSeleccionado({ ...clienteSeleccionado, estado: e.target.value === 'activo' })}
-            >
-              <option value="activo">Activo</option>
-              <option value="inactivo">Inactivo</option>
-            </select>
-            <button type="submit" className="submit">Guardar</button>
-            <button
-        onClick={() => {
-          setClienteSeleccionado(null);
-          setMostrarSeccion('tabla'); // Cambia la sección activa a la tabla
-        }}
-        className="delete"
-        style={{ marginTop: '1rem' }}
-      >
-        Cancelar
-            </button>
-          </form>
-        </div>
+        <form className="cliente-form" onSubmit={(e) => {
+          e.preventDefault()
+          handleActualizarCliente()
+        }}>
+          <label>Nombre</label>
+          <input type="text" value={clienteSeleccionado.nombre} onChange={(e) => handleNombreChange(e, 'editar')} />
+          <label>Correo</label>
+          <input type="email" value={clienteSeleccionado.correo} onChange={(e) => setClienteSeleccionado({ ...clienteSeleccionado, correo: e.target.value })} />
+          <label>Estado</label>
+          <select value={clienteSeleccionado.estado ? 'activo' : 'inactivo'} onChange={(e) => setClienteSeleccionado({ ...clienteSeleccionado, estado: e.target.value === 'activo' })}>
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+          </select>
+          <button type="submit" className="submit">Guardar</button>
+          <button className="delete" onClick={() => setMostrarSeccion('tabla')} style={{ marginTop: '1rem' }}>Cancelar</button>
+        </form>
       )}
     </div>
   )

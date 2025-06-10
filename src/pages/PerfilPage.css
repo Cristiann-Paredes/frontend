@@ -1,13 +1,10 @@
-
 /* Contenedor principal */
 .perfil-container {
   display: flex;
   flex-direction: row;
   min-height: 100vh;
   width: 100%;
-  background-color: #000000; /* Fondo negro */
-  
-
+  background-color: #000000;
 }
 
 /* Panel lateral */
@@ -18,9 +15,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
   position: sticky;
   top: 0;
+  height: 100vh;
+ 
 }
 
 /* Avatar circular */
@@ -29,9 +27,9 @@
   height: 120px;
   border-radius: 50%;
   overflow: hidden;
-  margin: 0 auto 12px auto;
+  margin: 1rem auto 0.8rem auto;
   border: 3px solid #fff;
-  background: #000; /* Fondo negro para el contenedor */
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,7 +45,7 @@
 .avatar-placeholder {
   font-size: 48px;
   color: #aaa;
-  background-color: #000; /* Fondo negro para placeholder */
+  background-color: #000;
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -66,20 +64,9 @@
 
 .perfil-rol {
   color: #fcfdfb;
-  margin-top: 5px;
+  margin-top: 3px;
   text-align: center;
   display: block;
-}
-
-/* Corrige el layout en pantallas pequeñas */
-@media (max-width: 768px) {
-  .perfil-nombre,
-  .perfil-rol {
-    display: block;
-    width: 100%;
-    text-align: center;
-    font-size: 0.95rem;
-  }
 }
 
 /* Menú lateral */
@@ -87,8 +74,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  flex-grow: 1;
+  gap: 0.6rem;
+  margin-top: 1rem;
 }
 
 .perfil-menu button {
@@ -114,9 +101,9 @@
 
 /* Cerrar sesión */
 .perfil-logout {
-  margin-top: 1rem;
-  padding: 0.80rem 1.5rem;
-  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.9rem 1.5rem;
+  width: 85%;
   background-color: #ef4444;
   color: white;
   font-weight: bold;
@@ -148,42 +135,28 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .perfil-container {
-    flex-direction: column;
-  }
-
-  .perfil-aside {
-    width: 100%;
-    height: auto;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-   
-  }
-
-  .perfil-menu {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .perfil-menu button {
-    flex: 1 1 auto;
-    text-align: center;
-  }
-
-  .perfil-logout {
-    width: auto;
-    margin-top: 1rem;
-  }
-
+/* Botón toggle del menú */
+.menu-toggle-btn {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 999;
+  background-color: #e63946;
+  color: white;
+  border: none;
+  font-size: 1.6rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: none;
 }
 
-/*para el clientes inactivo*/
+/* Panel oculto */
+.perfil-aside.oculto {
+  display: none;
+}
+
+/* Error pantalla */
 .perfil-error {
   position: fixed;
   top: 50%;
@@ -225,4 +198,39 @@
   width: 350px;
   height: auto;
   margin-bottom: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .perfil-container {
+    flex-direction: column;
+  }
+
+  .perfil-aside {
+    width: 100%;
+    height: auto;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+  .perfil-menu {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .perfil-menu button {
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .perfil-logout {
+    width: 90%;
+    margin-top: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .menu-toggle-btn {
+    display: block;
+  }
 }
