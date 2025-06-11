@@ -8,6 +8,8 @@ import EditarPerfilPage from './EditarPerfilPage';
 import AdminEstadoPage from './AdminEstadoPage';
 import ControlEstadoCliente from './ControlEstadoCliente';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function PerfilPage() {
   const [activeTab, setActiveTab] = useState('clientes');
   const [rol, setRol] = useState(null);
@@ -24,7 +26,7 @@ function PerfilPage() {
       return;
     }
 
-    fetch('http://localhost:3000/api/perfil', {
+    fetch(`${API_URL}/perfil`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(async (res) => {
@@ -59,7 +61,7 @@ function PerfilPage() {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     if (rol === 'cliente' && esMovil) setMostrarMenu(false);
-    window.scrollTo(0, 0); // Cierra el menú y hace scroll arriba
+    window.scrollTo(0, 0);
   };
 
   const renderContent = () => {

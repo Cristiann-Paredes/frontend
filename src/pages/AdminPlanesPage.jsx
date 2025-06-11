@@ -35,7 +35,7 @@ function AdminPlanesPage() {
 
   const obtenerPlanes = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/planes', {
+      const res = await fetch(`${API_URL}/planes`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       });
       const data = await res.json();
@@ -89,8 +89,8 @@ function AdminPlanesPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = editando && idEditando
-      ? `http://localhost:3000/api/planes/${idEditando}`
-      : 'http://localhost:3000/api/planes';
+      ? `${API_URL}/planes/${idEditando}`
+      : `${API_URL}/planes`;
     const method = editando ? 'PUT' : 'POST';
 
     try {
@@ -143,7 +143,7 @@ function AdminPlanesPage() {
   const handleEliminar = (id) => {
     confirmarAccion('¿Eliminar este plan?', async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/planes/${id}`, {
+        const res = await fetch(`${API_URL}/planes/${id}`,{
           method: 'DELETE',
           headers: { Authorization: `Bearer ${getToken()}` },
         });

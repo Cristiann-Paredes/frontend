@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import './PlanesPage.css';
 
-const API_MIS_PLANES = "http://localhost:3000/api/mis-planes";
+const API_URL = import.meta.env.VITE_API_URL;
+const API_MIS_PLANES = `${API_URL}/mis-planes`;
 const OPCIONES_MOTIVO = ['Lesión', 'Falta de tiempo', 'No entendí el ejercicio', 'Otro'];
 
 const PlanesPage = () => {
@@ -111,7 +112,7 @@ const PlanesPage = () => {
                         ...prev,
                         [idx]: { ...prev[idx], realizado: checked, motivo: checked ? '' : prev[idx]?.motivo || '' }
                       }));
-                      await axios.patch(`http://localhost:3000/api/asignaciones/${planSeleccionado._id}/ejercicio`, {
+                      await axios.patch(`${API_URL}/asignaciones/${planSeleccionado._id}/ejercicio`, {
                         idx,
                         realizado: checked,
                         motivo: checked ? '' : ejerciciosEstado[idx]?.motivo || ''
@@ -130,7 +131,7 @@ const PlanesPage = () => {
                         ...prev,
                         [idx]: { ...prev[idx], motivo: value }
                       }));
-                      await axios.patch(`http://localhost:3000/api/asignaciones/${planSeleccionado._id}/ejercicio`, {
+                      await axios.patch(`${API_URL}/asignaciones/${planSeleccionado._id}/ejercicio`, {
                         idx,
                         realizado: false,
                         motivo: value

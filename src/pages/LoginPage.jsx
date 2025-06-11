@@ -15,10 +15,9 @@ function LoginPage() {
     try {
       const data = await login({ correo, password });
       localStorage.setItem('token', data.token);
-      navigate('/perfil');
+      navigate('/perfil'); // O redirige según el rol si lo necesitas
     } catch (err) {
       setError(err.response?.data?.msg || err.message || 'Error al iniciar sesión');
-
     }
   };
 

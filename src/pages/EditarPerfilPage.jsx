@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Widget } from '@uploadcare/react-widget';
 import './EditarPerfilPage.css';
 
+const API_URL = import.meta.env.VITE_URL_BACKEND;
+
 function EditarPerfilPage() {
   const [nombre, setNombre] = useState('');
   const [passwordActual, setPasswordActual] = useState('');
@@ -13,7 +15,7 @@ function EditarPerfilPage() {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/perfil', {
+    fetch(`${API_URL}/perfil`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -30,40 +32,36 @@ function EditarPerfilPage() {
     widgetRef.current?.openDialog();
   };
 
-  
   const actualizarPerfil = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await fetch('http://localhost:3000/api/perfil', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ nombre, imagenPerfil }),
-    });
+    e.preventDefault();
+    try {
+      const res = await fetch(`${API_URL}/perfil`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ nombre, imagenPerfil }),
+      });
 
-    const data = await res.json();
-    setMensaje(data.msg || 'Perfil actualizado');
+      const data = await res.json();
+      setMensaje(data.msg || 'Perfil actualizado');
 
-    if (res.ok) {
-      // Espera 2 segundos y luego recarga
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+      if (res.ok) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (err) {
+      setMensaje('❌ Error al actualizar el perfil');
     }
-
-  } catch (err) {
-    setMensaje('❌ Error al actualizar el perfil');
-  }
-};
-
+  };
 
   const cambiarPassword = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:3000/api/perfil/password', {
+      const res = await fetch(`${API_URL}/perfil/password`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

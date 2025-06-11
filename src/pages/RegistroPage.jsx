@@ -4,7 +4,8 @@ import axios from 'axios';
 
 import './LoginPage.css';
 
-const API_REGISTRO = "http://localhost:3000/api/auth/registro";
+const API_URL = import.meta.env.VITE_API_URL;
+const API_REGISTRO = `${API_URL}/auth/registro`;
 
 function RegistroPage() {
   const [form, setForm] = useState({ nombre: '', correo: '', password: '', confirmar: '' });
@@ -15,12 +16,11 @@ function RegistroPage() {
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleNombreChange = e => {
-  const valor = e.target.value;
-  const soloLetras = valor.replace(/[^a-zA-ZÁÉÍÓÚÜÑáéíóúüñ\s]/g, '');
-  const enMayusculas = soloLetras.toUpperCase();
-  setForm({ ...form, nombre: enMayusculas });
-};
-
+    const valor = e.target.value;
+    const soloLetras = valor.replace(/[^a-zA-ZÁÉÍÓÚÜÑáéíóúüñ\s]/g, '');
+    const enMayusculas = soloLetras.toUpperCase();
+    setForm({ ...form, nombre: enMayusculas });
+  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -35,7 +35,7 @@ function RegistroPage() {
         nombre: form.nombre,
         correo: form.correo,
         password: form.password,
-        rol: "cliente"
+        rol: 'cliente',
       });
       setExito('Registro exitoso. Revisa tu correo para confirmar la cuenta.');
       setTimeout(() => navigate('/login'), 2000);
@@ -54,25 +54,49 @@ function RegistroPage() {
         {error && <p className="login-error">{error}</p>}
         {exito && <p className="login-exito">{exito}</p>}
         <form onSubmit={handleSubmit} className="login-form">
-<input
-  type="text"
-  name="nombre"
-  placeholder="Nombre completo"
-  value={form.nombre}
-  onChange={handleNombreChange}
-  required
-  className="login-input"
-/>
-          <input type="email" name="correo" placeholder="Correo electrónico" value={form.correo} onChange={handleChange} required className="login-input" />
-          <input type="password" name="password" placeholder="Contraseña" value={form.password} onChange={handleChange} required className="login-input" />
-          <input type="password" name="confirmar" placeholder="Confirmar contraseña" value={form.confirmar} onChange={handleChange} required className="login-input" />
+          <input
+            type="text"
+            name="nombre"
+            placeholder="Nombre completo"
+            value={form.nombre}
+            onChange={handleNombreChange}
+            required
+            className="login-input"
+          />
+          <input
+            type="email"
+            name="correo"
+            placeholder="Correo electrónico"
+            value={form.correo}
+            onChange={handleChange}
+            required
+            className="login-input"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            value={form.password}
+            onChange={handleChange}
+            required
+            className="login-input"
+          />
+          <input
+            type="password"
+            name="confirmar"
+            placeholder="Confirmar contraseña"
+            value={form.confirmar}
+            onChange={handleChange}
+            required
+            className="login-input"
+          />
           <button type="submit" className="login-button">REGISTRARSE</button>
           <p className="login-terminos">
             Al registrarte, aceptas nuestros <div className='terminos'>Términos y condiciones, Política de privacidad.</div> 
           </p>
         </form>
         <p className="login-footer">
-          ¿Ya tienes una cuenta? <Link to="/login " className="login-link">Inicia sesión</Link>
+          ¿Ya tienes una cuenta? <Link to="/login" className="login-link">Inicia sesión</Link>
         </p>
       </div>
     </div>

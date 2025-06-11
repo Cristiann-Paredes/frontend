@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import './AdminEstadoPage.css';
 
+const API_URL = import.meta.env.VITE_URL_BACKEND;
+
 function AdminEstadoPage() {
   const [clientes, setClientes] = useState([]);
   const [mensaje, setMensaje] = useState('');
@@ -8,7 +10,7 @@ function AdminEstadoPage() {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/perfil/clientes', {
+    fetch(`${API_URL}/perfil/clientes`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -25,7 +27,7 @@ function AdminEstadoPage() {
   const guardarCambios = async (id) => {
     const cliente = clientes.find((c) => c._id === id);
     try {
-      const res = await fetch(`http://localhost:3000/api/perfil/estado/${id}`, {
+      const res = await fetch(`${API_URL}/perfil/estado/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +54,7 @@ function AdminEstadoPage() {
 
   const ejecutarReinicio = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/reiniciar-semanal', {
+      const res = await fetch(`${API_URL}/reiniciar-semanal`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       });

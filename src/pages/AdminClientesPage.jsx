@@ -1,6 +1,8 @@
 // ...importaciones
 import { useEffect, useState } from 'react'
 import './AdminClientesPage.css'
+const API_URL = import.meta.env.VITE_URL_BACKEND;
+
 
 function AdminClientesPage() {
   const [clientes, setClientes] = useState([])
@@ -49,7 +51,7 @@ function AdminClientesPage() {
 
   const fetchClientes = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/clientes', {
+      const res = await fetch(`${API_URL}/clientes`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       const data = await res.json()
@@ -70,7 +72,7 @@ function AdminClientesPage() {
     const texto = cliente.estado ? '¿Inactivar este cliente?' : '¿Activar este cliente?'
     pedirConfirmacion(texto, async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/clientes/${id}/estado`, {
+        const res = await fetch(`${API_URL}/clientes/${id}/estado`,{
           method: 'PATCH',
           headers: { Authorization: `Bearer ${token}` }
         })
@@ -95,7 +97,7 @@ function AdminClientesPage() {
 
   const handleActualizarCliente = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/clientes/${clienteSeleccionado._id}`, {
+      const res = await fetch(`${API_URL}/clientes/${clienteSeleccionado._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(clienteSeleccionado)
@@ -117,7 +119,8 @@ function AdminClientesPage() {
   const handleEliminar = (id) => {
     pedirConfirmacion('¿Estás seguro de que deseas eliminar este cliente?', async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/clientes/${id}`, {
+        const res = await fetch(`${API_URL}/clientes/${id}`, {
+
           method: 'DELETE',
           headers: { Authorization: `Bearer ${token}` }
         })
@@ -136,7 +139,7 @@ function AdminClientesPage() {
 
   const handleCrearCliente = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/auth/registro', {
+      const res = await fetch(`${API_URL}/auth/registro`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(nuevoCliente)

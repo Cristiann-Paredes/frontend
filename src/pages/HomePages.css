@@ -1,78 +1,79 @@
+/* Reset general */
 html, body, #root {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
- 
   font-family: 'Roboto', sans-serif;
 }
 
-
+/* Contenedor principal con fondo */
 .home-container {
   position: relative;
   width: 100%;
-  height: 100vh; 
-  background-image: url('/fotologo.png'); 
-  background-size: cover; 
-  background-position: center; /* Centra la imagen */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  height: 100vh;
+  background-image: url('/fotologo.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
-  flex-direction: column; /* Alinea el contenido en columna */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Evita que el contenido desborde */
+  overflow: hidden;
 }
 
+/* Oculta link directo al login si se usa como entrada automática */
 a[href="/login"] {
-  display: none; /* Oculta el enlace */
+  display: none;
 }
 
+/* Contenido centrado encima del fondo */
 .home-content {
   position: relative;
-  z-index: 1; /* Asegura que el contenido esté encima de la imagen */
+  z-index: 1;
   text-align: center;
-  color: rgb(255, 255, 255);
-  max-width: 90%; /* Limita el ancho del contenido en pantallas pequeñas */
+  color: #fff;
+  max-width: 90%;
 }
 
+/* Título principal */
 .home-title {
-  font-size: 3rem; /* Tamaño más grande para pantallas grandes */
+  font-size: 3rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); /* Sombra más pronunciada */
-  line-height: 1.2; /* Mejora el espaciado entre líneas */
+  line-height: 1.2;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
 }
 
-@media (max-width: 768px) {
-  .home-title {
-    font-size: 2rem; /* Reduce el tamaño en pantallas pequeñas */
-  }
-}
-
+/* Botón principal */
 .home-button {
   background-color: #ef4444; /* Rojo */
-  color: rgb(255, 255, 255);
-  padding: 0.75rem 2rem; /* Botón más ancho */
+  color: #fff;
+  padding: 0.75rem 2rem;
   border: none;
-  border-radius: 0.75rem; /* Bordes más redondeados */
-  font-size: 1.5rem; /* Texto más grande */
+  border-radius: 0.75rem;
+  font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra inicial */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .home-button:hover {
   background-color: #dc2626; /* Rojo más oscuro */
-  transform: scale(1.1); /* Efecto de agrandamiento más notable */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* Responsividad */
 @media (max-width: 768px) {
+  .home-title {
+    font-size: 2rem;
+  }
+
   .home-button {
-    font-size: 1.25rem; /* Ajusta el tamaño del texto en pantallas pequeñas */
-    padding: 0.5rem 1.5rem; /* Reduce el tamaño del botón */
+    font-size: 1.25rem;
+    padding: 0.5rem 1.5rem;
   }
 }
-
-

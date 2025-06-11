@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './LoginPage.css';
 
-const API_RECUPERAR = "http://localhost:3000/api/auth/recuperar-password";
+const API_URL = import.meta.env.VITE_API_URL;
+const API_RECUPERAR = `${API_URL}/auth/recuperar-password`;
 
 function RecuperarPage() {
   const [correo, setCorreo] = useState('');
@@ -11,14 +12,14 @@ function RecuperarPage() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setMensaje('');
     setError('');
     try {
       await axios.post(API_RECUPERAR, { correo });
       setMensaje('Si el correo existe, recibirás instrucciones para recuperar tu contraseña.');
-      setTimeout(() => navigate('/login'), 4000); // espera s
+      setTimeout(() => navigate('/login'), 4000);
     } catch (err) {
       setError(err.response?.data?.msg || 'Error al solicitar recuperación');
     }
@@ -38,14 +39,14 @@ function RecuperarPage() {
             type="email"
             placeholder="Correo electrónico"
             value={correo}
-            onChange={e => setCorreo(e.target.value)}
+            onChange={(e) => setCorreo(e.target.value)}
             required
             className="login-input"
           />
           <button type="submit" className="login-button">ENVIAR</button>
         </form>
         <p className="login-footer">
-          <a href="/login " className="login-link">Volver</a>
+          <a href="/login" className="login-link">Volver</a>
         </p>
       </div>
     </div>

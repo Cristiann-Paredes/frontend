@@ -11,7 +11,7 @@ function AdminAsignacionesPage() {
   const [confirmacion, setConfirmacion] = useState(null);
   const [clienteActivo, setClienteActivo] = useState(null);
 
-  const API_URL = "http://localhost:3000/api";
+const API_URL = import.meta.env.VITE_URL_BACKEND;
 
   const mostrarMensaje = (texto, tiempo = 3000) => {
     setMensaje(texto);
