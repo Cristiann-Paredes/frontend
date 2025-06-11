@@ -4,8 +4,8 @@ import axios from 'axios';
 
 import './LoginPage.css';
 
-const API_URL = import.meta.env.VITE_API_URL;
-const API_REGISTRO = `${API_URL}/auth/registro`;
+const API_URL = import.meta.env.VITE_URL_BACKEND;
+const API_REGISTRO = `${API_URL}/api/auth/registro`;
 
 function RegistroPage() {
   const [form, setForm] = useState({ nombre: '', correo: '', password: '', confirmar: '' });
@@ -96,7 +96,7 @@ function RegistroPage() {
           </p>
         </form>
         <p className="login-footer">
-          ¿Ya tienes una cuenta? <Link to="/login " className="login-link">Inicia sesión</Link>
+          ¿Ya tienes una cuenta? <Link to="/login" className="login-link">Inicia sesión</Link>
         </p>
       </div>
     </div>
