@@ -8,8 +8,10 @@ import AdminPlanesPage from '../pages/AdminPlanesPage'
 import AdminAsignacionesPage from '../pages/AdminAsignacionesPage'
 import RegistroPage from '../pages/RegistroPage'
 import RecuperarPage from '../pages/RecuperarPage'
-import ConfirmarCuentaPage from '../pages/ConfirmarCuentaPage'
 import EditarPerfilPage from '../pages/EditarPerfilPage'
+import ConfirmacionExitosa from '../pages/ConfirmacionExitosa'
+import ConfirmacionError from '../pages/ConfirmacionError'
+import PasswordActualizada from '../pages/PasswordActualizada'
 
 import ProtectedRoute from './ProtectedRoute'
 import Navbar from '../components/Navbar'
@@ -19,7 +21,9 @@ function AppRouter() {
     <>
       <Navbar />
       <Routes>
-
+        <Route path="/confirmacion-exitosa" element={<ConfirmacionExitosa />} />
+        <Route path="/confirmacion-error" element={<ConfirmacionError />} />
+        <Route path="/password-actualizada" element={<PasswordActualizada />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegistroPage />} />
@@ -32,8 +36,6 @@ function AppRouter() {
             </ProtectedRoute>
           }
         />
-
-        <Route path="/confirmar/" element={<ConfirmarCuentaPage />} />   
 
         <Route
           path="/perfil"

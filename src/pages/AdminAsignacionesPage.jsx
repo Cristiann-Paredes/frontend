@@ -54,7 +54,7 @@ function AdminAsignacionesPage() {
       });
       setAsignaciones(res.data);
     } catch {
-      mostrarMensaje("❌ Error al asignar plan");
+      mostrarMensaje("❌ Plan ya asignado o error al asignar");
     }
   };
 

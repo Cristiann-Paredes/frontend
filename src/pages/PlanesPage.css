@@ -1,11 +1,11 @@
 /* Contenedor principal */
 .planes-page {
-  background-color: #121212;
-  min-height: 100vh;
+  background-color: #000000;
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  line-height: 1.6;
 }
 
 .planes-page h2 {
@@ -131,12 +131,12 @@
 
 /* Botón volver */
 .volver-btn {
-  width: 100%;
+  width: 50%;
   background-color: #d32f2f;
   color: white;
   font-weight: bold;
-  padding: 0.9rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -150,17 +150,26 @@
 /* Responsive */
 @media (min-width: 768px) {
   .planes-page {
-    max-width: 700px;
-    margin: 0 auto;
+    max-width: 100%;
+    padding: 2rem;
   }
 
-  .ejercicios-grid {
+  .planes-list {
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 1.5rem;
   }
 
-  .ejercicio-card {
-    width: calc(50% - 0.5rem);
+  .plan-btn {
+    width: 45%;
+    min-width: 300px;
+    max-width: 400px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .plan-btn {
+    width: 30%;
   }
 }

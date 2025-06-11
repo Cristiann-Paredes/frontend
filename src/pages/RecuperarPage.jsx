@@ -18,7 +18,7 @@ function RecuperarPage() {
     try {
       await axios.post(API_RECUPERAR, { correo });
       setMensaje('Si el correo existe, recibirás instrucciones para recuperar tu contraseña.');
-      setTimeout(() => navigate('/login'), 2500); // espera 2.5 segundos
+      setTimeout(() => navigate('/login'), 4000); // espera s
     } catch (err) {
       setError(err.response?.data?.msg || 'Error al solicitar recuperación');
     }
