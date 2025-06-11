@@ -1,5 +1,7 @@
 {
   "name": "gym-frontend",
+  "description": "Frontend del sistema OxGym - gestión de entrenamiento",
+  "author": "Cristian Paredes",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,9 +15,9 @@
     "@uploadcare/react-uploader": "^1.8.1",
     "@uploadcare/react-widget": "^2.4.7",
     "axios": "^1.9.0",
-    "react": "^19.0.0",
+    "react": "^18.2.0",
     "react-circular-progressbar": "^2.2.0",
-    "react-dom": "^19.0.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^7.5.3"
   },
   "devDependencies": {
