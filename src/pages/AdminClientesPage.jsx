@@ -151,6 +151,9 @@ const fetchClientes = async () => {
         setClientes([...clientes, { ...nuevoCliente, _id: data.cliente._id }])
         setNuevoCliente({ nombre: '', correo: '', password: '', estado: true, rol: 'cliente' })
         setMostrarSeccion('tabla')
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
         mostrarMensaje(data.msg || '❌ Error al crear cliente')
       }
