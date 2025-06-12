@@ -1,22 +1,14 @@
-const API_URL = import.meta.env.VITE_URL_BACKEND
+// src/api/auth.js
+import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const login = async ({ correo, password }) => {
-  try {
-    const response = await fetch(`${API_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ correo, password })
-    })
-
-    const data = await response.json()
-
-    if (!response.ok) throw new Error(data.msg || 'Error al iniciar sesión')
-
-    return data
-  } catch (error) {
-    throw new Error(error.message)
-  }
-}
+  const response = await axios.post(`${API_URL}/auth/login`, {
+    correo,
+    password,
+  }, {
+    withCredentials: true,
+  });
+  return response.data;
+};
