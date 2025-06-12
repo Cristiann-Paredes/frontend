@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Widget } from '@uploadcare/react-widget';
 import './AdminPlanesPage.css';
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 function AdminPlanesPage() {
   const [formulario, setFormulario] = useState({
