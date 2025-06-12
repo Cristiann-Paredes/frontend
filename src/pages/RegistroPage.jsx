@@ -97,7 +97,7 @@ function RegistroPage() {
           </p>
         </form>
         <p className="login-footer">
-          ¿Ya tienes una cuenta? <Link to="/login " className="login-link">Inicia sesión</Link>
+          ¿Ya tienes una cuenta? <Link to="/login" className="login-link">Inicia sesión</Link>
         </p>
       </div>
     </div>
