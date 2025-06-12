@@ -4,8 +4,8 @@ import axios from 'axios';
 
 import './LoginPage.css';
 
-const API_URL = import.meta.env.VITE_URL_BACKEND;
-const API_REGISTRO = `${API_URL}/api/auth/registro`;
+const API_URL = import.meta.env.VITE_API_URL;
+const API_REGISTRO = `${API_URL}/auth/registro`;  // ya incluye /api desde la variable
 
 function RegistroPage() {
   const [form, setForm] = useState({ nombre: '', correo: '', password: '', confirmar: '' });
