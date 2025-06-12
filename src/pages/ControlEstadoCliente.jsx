@@ -40,7 +40,6 @@ function ControlEstadoCliente() {
   if (!estado) {
     return (
       <p className="estado-loading">
-        ⚠️ Debes tener configuradas las fechas para ver el estado de tu cuenta.
       </p>
     );
   }
