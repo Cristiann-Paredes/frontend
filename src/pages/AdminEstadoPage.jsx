@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './AdminEstadoPage.css';
 
-const API_URL = import.meta.env.VITE_URL_BACKEND;
+const API_URL = import.meta.env.VITE_API_URL;
 
 function AdminEstadoPage() {
   const [clientes, setClientes] = useState([]);

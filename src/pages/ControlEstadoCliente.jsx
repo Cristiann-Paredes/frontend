@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './ControlEstadoCliente.css';
 
-const API_URL = import.meta.env.VITE_URL_BACKEND;
+const API_URL = import.meta.env.VITE_API_URL;
 
 function ControlEstadoCliente() {
   const [estado, setEstado] = useState(null);

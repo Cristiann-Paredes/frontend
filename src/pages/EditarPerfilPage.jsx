@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Widget } from '@uploadcare/react-widget';
 import './EditarPerfilPage.css';
 
-const API_URL = import.meta.env.VITE_URL_BACKEND;
+const API_URL = import.meta.env.VITE_API_URL;
 
 function EditarPerfilPage() {
   const [nombre, setNombre] = useState('');
