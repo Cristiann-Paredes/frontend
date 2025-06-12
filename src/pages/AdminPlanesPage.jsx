@@ -209,7 +209,7 @@ function AdminPlanesPage() {
 
             <tbody>
   {planes.length === 0 ? (
-    <tr><td colSpan={4}>No hay planes registrados.</td></tr>
+    <tr><td colSpan={4}></td></tr>
   ) : (
     planes.map((plan) => (
       <tr key={plan._id}>
