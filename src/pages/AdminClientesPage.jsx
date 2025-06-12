@@ -49,19 +49,20 @@ function AdminClientesPage() {
     setConfirmacion(null)
   }
 
-  const fetchClientes = async () => {
-    try {
-      const res = await fetch(`${API_URL}/clientes`, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.msg || 'Error al cargar clientes')
-      setClientes(data)
-    } catch (err) {
-      setError(err.message)
-    }
+const fetchClientes = async () => {
+  try {
+    const res = await fetch(`${API_URL}/clientes`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.msg || 'Error al cargar clientes')
+    
+    // Filtrar solo clientes confirmados
+    setClientes(data.filter(cliente => cliente.confirmEmail))
+  } catch (err) {
+    setError(err.message)
   }
-
+}
   useEffect(() => {
     if (token) fetchClientes()
     else setError('No autorizado')
