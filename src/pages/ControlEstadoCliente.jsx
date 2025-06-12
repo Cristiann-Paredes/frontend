@@ -13,8 +13,13 @@ function ControlEstadoCliente() {
     })
       .then(res => res.json())
       .then(data => {
-        // 👉 Solo mostrar si el correo está confirmado
-        if (data.confirmEmail && data.fechaInicio && data.fechaVencimiento) {
+        if (!data.confirmEmail) {
+          // Correo no confirmado
+          setEstado({ noConfirmado: true });
+          return;
+        }
+
+        if (data.fechaInicio && data.fechaVencimiento) {
           const inicio = new Date(data.fechaInicio);
           const fin = new Date(data.fechaVencimiento);
           const hoy = new Date();
@@ -31,11 +36,29 @@ function ControlEstadoCliente() {
             porcentaje: porcentajeRestante,
             imagenPerfil: data.imagenPerfil || ''
           });
+        } else {
+          setEstado({ sinFechas: true });
         }
+      })
+      .catch(err => {
+        console.error('Error al obtener perfil:', err);
+        setEstado({ error: true });
       });
   }, []);
 
   if (!estado) return <p className="estado-loading">Cargando estado...</p>;
+
+  if (estado.error) {
+    return <p className="estado-error">❌ No se pudo cargar el estado. Intenta más tarde.</p>;
+  }
+
+  if (estado.noConfirmado) {
+    return <p className="estado-aviso">⚠️ Debes confirmar tu correo para ver el estado de tu cuenta.</p>;
+  }
+
+  if (estado.sinFechas) {
+    return <p className="estado-aviso">📅 Aún no tienes fechas asignadas para tu plan.</p>;
+  }
 
   return (
     <div className="estado-container">
@@ -67,3 +90,4 @@ function ControlEstadoCliente() {
 }
 
 export default ControlEstadoCliente;
+
