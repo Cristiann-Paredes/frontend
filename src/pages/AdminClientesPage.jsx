@@ -139,26 +139,29 @@ const fetchClientes = async () => {
     })
   }
 
-  const handleCrearCliente = async () => {
-    try {
-      const res = await fetch(`${API_URL}/auth/registro`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify(nuevoCliente)
-      })
-      const data = await res.json()
-      if (res.ok) {
-        mostrarMensaje(data.msg || '✅ Cliente creado')
-        setClientes([...clientes, { ...nuevoCliente, _id: data.cliente._id }])
-        setNuevoCliente({ nombre: '', correo: '', password: '', estado: true, rol: 'cliente' })
-        
-      } else {
-        mostrarMensaje(data.msg || '❌ Error al crear cliente')
-      }
-    } catch {
-      mostrarMensaje('❌ Error al conectar con el servidor')
+ const handleCrearCliente = async () => {
+  try {
+    const res = await fetch(`${API_URL}/auth/registro`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify(nuevoCliente)
+    })
+    const data = await res.json()
+    if (res.ok) {
+      mostrarMensaje(data.msg || '✅ Cliente creado')
+      
+      // ✅ Re-fetch para obtener solo los confirmados
+      await fetchClientes()
+
+      setNuevoCliente({ nombre: '', correo: '', password: '', estado: true, rol: 'cliente' })
+    } else {
+      mostrarMensaje(data.msg || '❌ Error al crear cliente')
     }
+  } catch {
+    mostrarMensaje('❌ Error al conectar con el servidor')
   }
+}
+
 
   return (
     <div className="admin-clientes-page">
