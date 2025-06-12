@@ -153,7 +153,7 @@ const fetchClientes = async () => {
         setMostrarSeccion('tabla')
         setTimeout(() => {
           window.location.reload();
-        }, 2000);
+        }, 0000);
       } else {
         mostrarMensaje(data.msg || '❌ Error al crear cliente')
       }
