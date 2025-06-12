@@ -17,6 +17,7 @@ function AdminClientesPage() {
     password: '',
     estado: true,
     rol: 'cliente'
+
   })
 
   const token = localStorage.getItem('token')
@@ -153,7 +154,7 @@ const fetchClientes = async () => {
         setMostrarSeccion('tabla')
         setTimeout(() => {
           window.location.reload();
-        }, 0000);
+        }, 0010);
       } else {
         mostrarMensaje(data.msg || '❌ Error al crear cliente')
       }
