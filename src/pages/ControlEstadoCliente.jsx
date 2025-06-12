@@ -13,7 +13,8 @@ function ControlEstadoCliente() {
     })
       .then(res => res.json())
       .then(data => {
-        if (data.fechaInicio && data.fechaVencimiento) {
+        // 👉 Solo mostrar si el correo está confirmado
+        if (data.confirmEmail && data.fechaInicio && data.fechaVencimiento) {
           const inicio = new Date(data.fechaInicio);
           const fin = new Date(data.fechaVencimiento);
           const hoy = new Date();
