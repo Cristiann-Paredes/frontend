@@ -3,7 +3,7 @@
 
 Este repositorio contiene el código fuente del **frontend** del sistema web **OxGym**, una plataforma de gestión de planes de entrenamiento personalizada para clientes y administradores de un gimnasio.
 
-Repositorio Frontend:  
+Repositorio Backend:  
 📧 **https://github.com/Cristiann-Paredes/back.git**
 
 ## 📦 Tecnologías Utilizadas
