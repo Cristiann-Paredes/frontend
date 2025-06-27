@@ -46,7 +46,7 @@ function RecuperarPage() {
           <button type="submit" className="login-button">ENVIAR</button>
         </form>
         <p className="login-footer">
-          <a href="/login" className="login-link">Volver</a>
+          <a href="/login " className="login-link">Volver</a>
         </p>
       </div>
     </div>
