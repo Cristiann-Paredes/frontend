@@ -7,7 +7,7 @@ function HomePage() {
   return (
     <div className="home-container">
       <div className="home-content">
-        <h1 className="home-title">Bienvenido a OX GYM</h1>
+        <h1 className="home-title">Bienvenido a CHRIS_PERSONAL_TRAINING </h1>
         <button
           onClick={() => navigate('/login')}
           className="home-button"
@@ -18,5 +18,6 @@ function HomePage() {
     </div>
   );
 }
+
 
 export default HomePage;
